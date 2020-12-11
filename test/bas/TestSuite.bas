@@ -54,14 +54,14 @@ Sub TestAll()
     arr(17) = vbNull
     Set arr(18) = Nothing
 
-    ' ArrayUtilsのテスト
+    ' [標準モジュール]
     Call TestArrayUtils.TestAll(arr)
-
-    ' CellAddressUtilsのテスト
     Call TestCellAddressUtils.TestAll
-
-    ' LangUtilsのテスト
+    Call TestJapaneseHolidayUtils.TestAll
     Call TestLangUtils.TestAll(arr)
+
+    ' [クラスモジュール]
+    Call TestBusinessDayCalculator.TestAll
     
 End Sub
 
@@ -74,6 +74,18 @@ Public Sub PrintResult(ByVal result As Boolean, Optional ByVal num As Integer = 
             Debug.Print "No." & num & " OK!"
         End If
     Else
+        If num = 0 Then
+            Debug.Print "NG!"
+        Else
+            Debug.Print "No." & num & " NG!"
+        End If
+    End If
+
+End Sub
+
+Public Sub PrintResultIfNg(ByVal result As Boolean, Optional ByVal num As Integer = 0)
+
+    If Not result Then
         If num = 0 Then
             Debug.Print "NG!"
         Else
