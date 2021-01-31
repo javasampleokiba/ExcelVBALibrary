@@ -3,7 +3,7 @@ Option Explicit
 
 '------------------------------------------------------------------------------
 '
-' MODULE : ‘Sƒ‚ƒWƒ…[ƒ‹‚ÌƒeƒXƒg‚ðŽÀs‚·‚éƒ‚ƒWƒ…[ƒ‹
+' MODULE : å…¨ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã®ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 '
 '------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ Sub TestAll()
     Dim val11(1)        As String
     Dim arr(1 To 18)    As Variant
 
-    ' ‘Sƒf[ƒ^Œ^‚ðŠi”[‚µ‚½ƒeƒXƒg—p”z—ñ‚ðì¬
+    ' å…¨ãƒ‡ãƒ¼ã‚¿åž‹ã‚’æ ¼ç´ã—ãŸãƒ†ã‚¹ãƒˆç”¨é…åˆ—ã‚’ä½œæˆ
     val1 = 10
     val2 = True
     val3 = 100
@@ -45,7 +45,7 @@ Sub TestAll()
     Set arr(8) = val8   ' Object
     arr(9) = val9       ' String
     arr(10) = val10     ' String * 20
-    arr(11) = val11     ' String”z—ñ
+    arr(11) = val11     ' Stringé…åˆ—
     arr(12) = Empty
     arr(13) = Null
     arr(14) = Err
@@ -54,18 +54,18 @@ Sub TestAll()
     arr(17) = vbNull
     Set arr(18) = Nothing
 
-    ' [•W€ƒ‚ƒWƒ…[ƒ‹]
+    ' [æ¨™æº–ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«]
     Call TestArrayUtils.TestAll(arr)
     Call TestCellAddressUtils.TestAll
     Call TestJapaneseHolidayUtils.TestAll
     Call TestLangUtils.TestAll(arr)
 
-    ' [ƒNƒ‰ƒXƒ‚ƒWƒ…[ƒ‹]
+    ' [ã‚¯ãƒ©ã‚¹ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«]
     Call TestBusinessDayCalculator.TestAll
     
 End Sub
 
-Public Sub PrintResult(ByVal result As Boolean, Optional ByVal num As Integer = 0)
+Public Sub PrintResult(ByVal result As Boolean, Optional ByVal num As Variant = 0)
 
     If result Then
         If num = 0 Then
@@ -83,7 +83,7 @@ Public Sub PrintResult(ByVal result As Boolean, Optional ByVal num As Integer = 
 
 End Sub
 
-Public Sub PrintResultIfNg(ByVal result As Boolean, Optional ByVal num As Integer = 0)
+Public Sub PrintResultIfNg(ByVal result As Boolean, Optional ByVal num As Variant = 0)
 
     If Not result Then
         If num = 0 Then
