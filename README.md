@@ -32,7 +32,8 @@ ExcelVBALibraryは、ExcelVBAで開発する際に役立つ標準モジュール
 [[ExcelVBA\][サンプルコード] 配列やオブジェクト型の内容をDebug.Printで出力する](http://javasampleokiba.blog.fc2.com/blog-entry-9.html)<br>
 [[ExcelVBA\][サンプルコード] ワークシートの列番号と列名の相互変換](http://javasampleokiba.blog.fc2.com/blog-entry-10.html)<br>
 [[ExcelVBA\][サンプルコード] 配列をソート（クイックソート）する](http://javasampleokiba.blog.fc2.com/blog-entry-18.html)<br>
-[[ExcelVBA\][サンプルコード] 営業日数を計算する](http://javasampleokiba.blog.fc2.com/blog-entry-22.html)
+[[ExcelVBA\][サンプルコード] 営業日数を計算する](http://javasampleokiba.blog.fc2.com/blog-entry-22.html)<br>
+[[[ExcelVBA\][サンプルコード] 配列内の要素の位置を取得する](http://javasampleokiba.blog.fc2.com/blog-entry-47.html)]
 
 ## License
 [LICENSE](https://github.com/javasampleokiba/ExcelVBALibrary/blob/main/LICENSE)を参照してください。
