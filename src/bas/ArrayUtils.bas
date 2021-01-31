@@ -3,32 +3,211 @@ Option Explicit
 
 '------------------------------------------------------------------------------
 '
-' MODULE : �z�񑀍�Ɋւ��郆�[�e�B���e�B���W���[��
+' MODULE : 配列操作に関するユーティリティモジュール
 '
-' LINK   : ���̃��W���[���͈ȉ��̃��W���[�����Q�Ƃ��Ă��܂��B
+' NOTE   : 各関数の配列を渡す引数に配列以外を指定した場合、
+'          特に明記がない限りエラーを発出します。
 '
-'          �ELangUtils
+' LINK   : このモジュールは以下のモジュールを参照しています。
+'
+'          ・LangUtils
 '
 '------------------------------------------------------------------------------
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肳�ꂽ�z�񂪋�ł��邩���肵�܂��B
-'            ����������Ă��Ȃ��A���邢��Erase���s��̓��I�z��̏ꍇ��
-'            true ��Ԃ��܂��B
+' FUNCTION : 指定した要素が指定した配列に含まれるか判定します。
 '
-' PARAMS   : arr - ����Ώۂ̔z��
+' PARAMS   : arr  - 検索対象の配列
+'            item - 検索する要素
 '
-' RETURN   : �w�肳�ꂽ�z�񂪋�ł���ꍇ�� true
+' RETURN   : 存在する場合は True
 '
-' ERROR    : �����ɔz��ȊO���w�肵���ꍇ
+'------------------------------------------------------------------------------
+Public Function Contains(ByRef arr As Variant, ByRef item As Variant) As Boolean
+
+    If -1 < IndexOf(arr, item) Then
+        Contains = True
+    Else
+        Contains = False
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定した要素すべてが指定した配列に含まれるか判定します。
+'
+' PARAMS   : arr   - 検索対象の配列
+'            items - 検索する要素の配列
+'
+' RETURN   : すべての要素が存在する場合は True
+'
+'------------------------------------------------------------------------------
+Public Function ContainsAll(ByRef arr As Variant, ByRef items As Variant) As Boolean
+    Dim i       As Long
+
+    If IsEmptyArray(items) Then
+        ContainsAll = True
+        Exit Function
+    End If
+
+    ContainsAll = False
+
+    If IsEmptyArray(arr) Then Exit Function
+
+    For i = LBound(items) To UBound(items)
+        If IndexOf(arr, items(i)) = -1 Then
+            Exit Function
+        End If
+    Next
+
+    ContainsAll = True
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定した要素のいずれかが指定した配列に含まれるか判定します。
+'
+' PARAMS   : arr   - 検索対象の配列
+'            items - 検索する要素の配列
+'
+' RETURN   : いずれかの要素が存在する場合は True
+'
+'------------------------------------------------------------------------------
+Public Function ContainsAny(ByRef arr As Variant, ByRef items As Variant) As Boolean
+    Dim i       As Long
+
+    If IsEmptyArray(items) Then
+        ContainsAny = True
+        Exit Function
+    End If
+
+    If IsEmptyArray(arr) Then
+        ContainsAny = False
+        Exit Function
+    End If
+
+    ContainsAny = True
+
+    For i = LBound(items) To UBound(items)
+        If -1 < IndexOf(arr, items(i)) Then
+            Exit Function
+        End If
+    Next
+
+    ContainsAny = False
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定した要素が指定した配列内で最初に見つかった位置インデックスを
+'            返します。
+'
+' PARAMS   : arr     - 検索対象の配列
+'            item    - 検索する要素
+'            [start] - 検索開始位置インデックス (範囲外でも正しく動作します)
+'
+' RETURN   : 指定した要素が見つかった位置インデックス (存在しない場合は -1)
+'
+'------------------------------------------------------------------------------
+Public Function IndexOf(ByRef arr As Variant, ByRef item As Variant, _
+                        Optional ByVal start As Long = -1) As Long
+    Dim i       As Long
+    Dim idx     As Long
+
+    If IsEmptyArray(arr) Then
+        IndexOf = -1
+        Exit Function
+    End If
+
+    If start < LBound(arr) Then
+        idx = LBound(arr)
+    Else
+        idx = start
+    End If
+
+    For i = idx To UBound(arr)
+        If LangUtils.IsEqual(arr(i), item) Then
+            IndexOf = i
+            Exit Function
+        End If
+    Next
+
+    IndexOf = -1
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定した要素が指定した配列内で見つかったすべての位置インデックスを
+'            返します。
+'
+' PARAMS   : arr     - 検索対象の配列
+'            item    - 検索する要素
+'            [start] - 検索開始位置インデックス (範囲外でも正しく動作します)
+'
+' RETURN   : 指定した要素が見つかった位置インデックスの配列
+'            (存在しない場合は空の配列)
+'
+'------------------------------------------------------------------------------
+Public Function IndicesOf(ByRef arr As Variant, ByRef item As Variant, _
+                          Optional ByVal start As Long = -1) As Long()
+    Dim i               As Long
+    Dim idx             As Long
+    Dim cnt             As Long
+    Dim result()        As Long
+    Dim emptyArr()      As Long
+
+    If IsEmptyArray(arr) Then
+        IndicesOf = emptyArr
+        Exit Function
+    End If
+
+    If start < LBound(arr) Then
+        idx = LBound(arr)
+    Else
+        idx = start
+    End If
+
+    cnt = 0
+    ReDim result(Length(arr) - 1)
+    For i = idx To UBound(arr)
+        If LangUtils.IsEqual(arr(i), item) Then
+            result(cnt) = i
+            cnt = cnt + 1
+        End If
+    Next
+
+    If 0 < cnt Then
+        ReDim Preserve result(cnt - 1)
+        IndicesOf = result
+    Else
+        IndicesOf = emptyArr
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+
+' FUNCTION : 指定された配列が空であるか判定します。
+'            初期化されていない、あるいはErase実行後の動的配列の場合に
+'            true を返します。
+'
+' PARAMS   : arr - 判定対象の配列
+'
+' RETURN   : 指定された配列が空である場合は true
+'
+' ERROR    : 引数に配列以外を指定した場合
 '
 '------------------------------------------------------------------------------
 Public Function IsEmptyArray(ByRef arr As Variant) As Boolean
     Dim i       As Long
 
     If Not IsArray(arr) Then
-        Call Err.Raise(5)   ' �v���V�[�W���̌Ăяo���A�܂��͈������s���ł��B
+        Call Err.Raise(5)   ' プロシージャの呼び出し、または引数が不正です。
     End If
     
     On Error GoTo ErrHandler
@@ -44,14 +223,14 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肳�ꂽ2�̔z�񂪓����������肵�܂��B
+' FUNCTION : 指定された2つの配列が等しいか判定します。
 '
-' PARAMS   : arr1 - ��r�Ώۂ̔z��1
-'            arr2 - ��r�Ώۂ̔z��2
+' PARAMS   : arr1 - 比較対象の配列1
+'            arr2 - 比較対象の配列2
 '
-' RETURN   : �w�肳�ꂽ2�̔z�񂪓������ꍇ�� true
+' RETURN   : 指定された2つの配列が等しい場合は true
 '
-' ERROR    : �����ɔz��ȊO���w�肵���ꍇ
+' ERROR    : 引数に配列以外を指定した場合
 '
 '------------------------------------------------------------------------------
 Public Function IsEqual(ByRef arr1 As Variant, ByRef arr2 As Variant) As Boolean
@@ -59,21 +238,21 @@ Public Function IsEqual(ByRef arr1 As Variant, ByRef arr2 As Variant) As Boolean
 
     IsEqual = False
 
-    ' �����Ƃ��v�f�����ݒ肳��Ă��Ȃ����I�z��̏ꍇ
+    ' 両方とも要素数が設定されていない動的配列の場合
     If IsEmptyArray(arr1) And IsEmptyArray(arr2) Then
         IsEqual = True
         Exit Function
         
-    ' �����ꂩ���v�f�����ݒ肳��Ă��Ȃ����I�z��̏ꍇ
+    ' いずれかが要素数が設定されていない動的配列の場合
     ElseIf IsEmptyArray(arr1) Or IsEmptyArray(arr2) Then
         Exit Function
     End If
 
-    ' �z��̍ŏ��E�ő�C���f�b�N�X���������Ȃ��ꍇ
+    ' 配列の最小・最大インデックスが等しくない場合
     If LBound(arr1) <> LBound(arr2) Then Exit Function
     If UBound(arr1) <> UBound(arr2) Then Exit Function
 
-    ' �S�v�f���r
+    ' 全要素を比較
     For i = LBound(arr1) To UBound(arr1)
         If Not LangUtils.IsEqual(arr1(i), arr2(i)) Then
             Exit Function
@@ -86,11 +265,100 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �z��̗v�f�����擾���܂��B
+' FUNCTION : 指定した要素が指定した配列内で最後に見つかった位置インデックスを
+'            返します。
 '
-' PARAMS   : arr - �擾�Ώۂ̔z��
+' PARAMS   : arr     - 検索対象の配列
+'            item    - 検索する要素
+'            [start] - 検索開始位置インデックス (範囲外でも正しく動作します)
 '
-' RETURN   : �z��̗v�f��
+' RETURN   : 指定した要素が見つかった位置インデックス (存在しない場合は -1)
+'
+'------------------------------------------------------------------------------
+Public Function LastIndexOf(ByRef arr As Variant, ByRef item As Variant, _
+                            Optional ByVal start As Long = -1) As Long
+    Dim i       As Long
+    Dim idx     As Long
+
+    If IsEmptyArray(arr) Then
+        LastIndexOf = -1
+        Exit Function
+    End If
+
+    If start < 0 Or UBound(arr) < start Then
+        idx = UBound(arr)
+    Else
+        idx = start
+    End If
+
+    For i = idx To LBound(arr) Step -1
+        If LangUtils.IsEqual(arr(i), item) Then
+            LastIndexOf = i
+            Exit Function
+        End If
+    Next
+
+    LastIndexOf = -1
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 最後から検索して、指定した要素が指定した配列内で見つかった
+'            すべての位置インデックスを返します。
+'
+' PARAMS   : arr     - 検索対象の配列
+'            item    - 検索する要素
+'            [start] - 検索開始位置インデックス (範囲外でも正しく動作します)
+'
+' RETURN   : 指定した要素が見つかった位置インデックスの配列
+'            (存在しない場合は空の配列)
+'
+'------------------------------------------------------------------------------
+Public Function LastIndicesOf(ByRef arr As Variant, ByRef item As Variant, _
+                              Optional ByVal start As Long = -1) As Long()
+    Dim i               As Long
+    Dim idx             As Long
+    Dim cnt             As Long
+    Dim result()        As Long
+    Dim emptyArr()      As Long
+
+    If IsEmptyArray(arr) Then
+        LastIndicesOf = result
+        Exit Function
+    End If
+
+    If start < 0 Or UBound(arr) < start Then
+        idx = UBound(arr)
+    Else
+        idx = start
+    End If
+
+    cnt = 0
+    ReDim result(Length(arr) - 1)
+    For i = idx To LBound(arr) Step -1
+        If LangUtils.IsEqual(arr(i), item) Then
+            result(cnt) = i
+            cnt = cnt + 1
+        End If
+    Next
+
+    If 0 < cnt Then
+        ReDim Preserve result(cnt - 1)
+        LastIndicesOf = result
+    Else
+        LastIndicesOf = emptyArr
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 配列の要素数を取得します。
+'
+' PARAMS   : arr - 取得対象の配列
+'
+' RETURN   : 配列の要素数
 '
 '------------------------------------------------------------------------------
 Public Function Length(ByRef arr As Variant) As Long
@@ -106,11 +374,11 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肳�ꂽ�z��̗v�f�������Ƀ\�[�g���܂��B
-'            ���ׂĂ̗v�f���s�������Z�q�ɂ���r���\�ł��邱�Ƃ��O������ł��B
-'            CompareTo���\�b�h�����������I�u�W�F�N�g�̔z��������ɂł��܂��B
+' FUNCTION : 指定された配列の要素を昇順にソートします。
+'            すべての要素が不等号演算子による比較が可能であることが前提条件です。
+'            CompareToメソッドを実装したオブジェクトの配列も引数にできます。
 '
-' PARAMS   : arr - �����Ώۂ̔z��
+' PARAMS   : arr - 処理対象の配列
 '
 '------------------------------------------------------------------------------
 Public Sub Sort(ByRef arr As Variant)
