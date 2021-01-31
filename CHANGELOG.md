@@ -7,11 +7,11 @@
 JapaneseHolidayUtils、BusinessDayCalculatorモジュール追加。
 
 ## 2021/01/31
-ArrayUtilsモジュールに以下の関数を追加。
-・Contains
-・ContainsAll
-・ContainsAny
-・IndexOf
-・IndicesOf
-・LastIndexOf
+ArrayUtilsモジュールに以下の関数を追加。<br>
+・Contains<br>
+・ContainsAll<br>
+・ContainsAny<br>
+・IndexOf<br>
+・IndicesOf<br>
+・LastIndexOf<br>
 ・LastIndicesOf
