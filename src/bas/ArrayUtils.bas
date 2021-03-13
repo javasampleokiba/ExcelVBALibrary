@@ -16,6 +16,67 @@ Option Explicit
 
 '------------------------------------------------------------------------------
 '
+' FUNCTION : 指定された動的配列の指定位置に要素を追加します。
+'            位置インデックスに負数を指定すると配列の後方からの位置インデックス
+'            として検索します。
+'
+' PARAMS   : arr   - 追加対象の配列
+'            index - 追加する位置インデックス
+'            item  - 追加する要素
+'
+'------------------------------------------------------------------------------
+Public Sub Add(ByRef arr As Variant, ByVal index As Long, ByRef item As Variant)
+    Dim i       As Long
+    Dim idx     As Long
+
+    If index = 0 And IsEmptyArray(arr) Then
+        Call Init(arr, item)
+        Exit Sub
+    End If
+
+    idx = ActualIndex(arr, index)
+
+    Call CheckBoundForInsert(arr, idx)
+
+    Call Resize(arr, 1)
+    For i = UBound(arr) - 1 To idx Step -1
+        Call SetAt(arr, i + 1, arr(i))
+    Next
+    Call SetAt(arr, idx, item)
+
+End Sub
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された動的配列に指定された配列を追加します。
+'
+' PARAMS   : arr      - 追加対象の配列
+'            otherArr - 追加する配列
+'
+'------------------------------------------------------------------------------
+Public Sub Concat(ByRef arr As Variant, ByRef otherArr As Variant)
+    Dim idx     As Long
+    Dim item    As Variant
+
+    If IsEmptyArray(otherArr) Then Exit Sub
+
+    If IsEmptyArray(arr) Then
+        idx = 0
+        ReDim Preserve arr(0 To Length(otherArr) - 1)
+    Else
+        idx = UBound(arr) + 1
+        Call Resize(arr, Length(otherArr))
+    End If
+
+    For Each item In otherArr
+        Call SetAt(arr, idx, item)
+        idx = idx + 1
+    Next
+
+End Sub
+
+'------------------------------------------------------------------------------
+'
 ' FUNCTION : 指定した要素が指定した配列に含まれるか判定します。
 '
 ' PARAMS   : arr  - 検索対象の配列
@@ -45,7 +106,7 @@ End Function
 '
 '------------------------------------------------------------------------------
 Public Function ContainsAll(ByRef arr As Variant, ByRef items As Variant) As Boolean
-    Dim i       As Long
+    Dim item    As Variant
 
     If IsEmptyArray(items) Then
         ContainsAll = True
@@ -56,8 +117,8 @@ Public Function ContainsAll(ByRef arr As Variant, ByRef items As Variant) As Boo
 
     If IsEmptyArray(arr) Then Exit Function
 
-    For i = LBound(items) To UBound(items)
-        If IndexOf(arr, items(i)) = -1 Then
+    For Each item In items
+        If IndexOf(arr, item) = -1 Then
             Exit Function
         End If
     Next
@@ -77,7 +138,7 @@ End Function
 '
 '------------------------------------------------------------------------------
 Public Function ContainsAny(ByRef arr As Variant, ByRef items As Variant) As Boolean
-    Dim i       As Long
+    Dim item    As Variant
 
     If IsEmptyArray(items) Then
         ContainsAny = True
@@ -91,13 +152,69 @@ Public Function ContainsAny(ByRef arr As Variant, ByRef items As Variant) As Boo
 
     ContainsAny = True
 
-    For i = LBound(items) To UBound(items)
-        If -1 < IndexOf(arr, items(i)) Then
+    For Each item In items
+        If -1 < IndexOf(arr, item) Then
             Exit Function
         End If
     Next
 
     ContainsAny = False
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された配列の先頭の要素を取得します。
+'
+' PARAMS   : arr - 検索対象の配列
+'
+' RETURN   : 先頭の要素
+'
+'------------------------------------------------------------------------------
+Public Function First(ByRef arr As Variant) As Variant
+
+    If IsObject(arr(LBound(arr))) Then
+        Set First = arr(LBound(arr))
+    Else
+        First = arr(LBound(arr))
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された配列から指定した位置インデックスの要素を取得します。
+'            位置インデックスに負数を指定すると配列の後方からの位置インデックス
+'            として検索します。
+'
+' PARAMS   : arr   - 取得対象の配列
+'            index - 取得する位置インデックス
+'            [def] - 位置インデックスが不正の場合に返すデフォルト値 (省略時はNull)
+'
+' RETURN   : 指定した位置インデックスの要素 または デフォルト値
+'
+'------------------------------------------------------------------------------
+Public Function GetAt(ByRef arr As Variant, ByVal index As Long, _
+                        Optional ByRef def As Variant = Null) As Variant
+    Dim idx     As Long
+
+    If IsObject(def) Then
+        Set GetAt = def
+    Else
+        GetAt = def
+    End If
+
+    If IsEmptyArray(arr) Then Exit Function
+
+    idx = ActualIndex(arr, index)
+
+    If LBound(arr) <= idx And idx <= UBound(arr) Then
+        If IsObject(arr(idx)) Then
+            Set GetAt = arr(idx)
+        Else
+            GetAt = arr(idx)
+        End If
+    End If
 
 End Function
 
@@ -265,6 +382,25 @@ End Function
 
 '------------------------------------------------------------------------------
 '
+' FUNCTION : 指定された配列の最後の要素を取得します。
+'
+' PARAMS   : arr - 検索対象の配列
+'
+' RETURN   : 最後の要素
+'
+'------------------------------------------------------------------------------
+Public Function Last(ByRef arr As Variant) As Variant
+
+    If IsObject(arr(UBound(arr))) Then
+        Set Last = arr(UBound(arr))
+    Else
+        Last = arr(UBound(arr))
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+'
 ' FUNCTION : 指定した要素が指定した配列内で最後に見つかった位置インデックスを
 '            返します。
 '
@@ -374,6 +510,196 @@ End Function
 
 '------------------------------------------------------------------------------
 '
+' FUNCTION : 指定された動的配列の最後の要素を削除します。
+'
+' PARAMS   : arr - 削除対象の配列
+'
+' RETURN   : 削除した要素
+'
+'------------------------------------------------------------------------------
+Public Function Pop(ByRef arr As Variant) As Variant
+    Dim i       As Long
+    Dim uIdx    As Long
+
+    uIdx = UBound(arr)
+    If IsObject(arr(uIdx)) Then
+        Set Pop = arr(uIdx)
+    Else
+        Pop = arr(uIdx)
+    End If
+
+    If Length(arr) = 1 Then
+        Erase arr
+    Else
+        Call Resize(arr, -1)
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された動的配列の最後に要素を追加します。
+'
+' PARAMS   : arr  - 追加対象の配列
+'            item - 追加する要素
+'
+'------------------------------------------------------------------------------
+Public Sub Push(ByRef arr As Variant, ByRef item As Variant)
+
+    If IsEmptyArray(arr) Then
+        Call Add(arr, 0, item)
+    Else
+        Call Add(arr, UBound(arr) + 1, item)
+    End If
+
+End Sub
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された配列から指定した要素を削除します。
+'
+' PARAMS   : arr    - 削除対象の配列
+'            item   - 削除する要素
+'            [size] - 削除する最大数 (省略すると、すべて削除)
+'
+'------------------------------------------------------------------------------
+Public Sub Remove(ByRef arr As Variant, ByRef item As Variant, _
+                  Optional ByVal size As Long = 0)
+    Dim idx     As Long
+    Dim cur     As Long
+    Dim cnt     As Long
+
+    cur = -1
+    cnt = 0
+
+    Do While True
+        idx = IndexOf(arr, item, cur)
+        If 0 <= idx Then
+            Call RemoveAt(arr, idx)
+            cnt = cnt + 1
+
+            ' 削除最大数に達したら終了
+            If 0 < size And cnt = size Then
+                Exit Sub
+            End If
+
+        ' 見つからなければ終了
+        Else
+            Exit Sub
+        End If
+
+        cur = idx
+    Loop
+
+End Sub
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された配列から指定したすべての要素を削除します。
+'
+' PARAMS   : arr    - 削除対象の配列
+'            items  - 削除する要素の配列
+'
+'------------------------------------------------------------------------------
+Public Sub RemoveAll(ByRef arr As Variant, ByRef items As Variant)
+    Dim item    As Variant
+
+    For Each item In items
+        Call Remove(arr, item)
+    Next
+
+End Sub
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 配列内の指定した位置の要素を削除します。
+'            位置インデックスに負数を指定すると配列の後方からの位置インデックス
+'            として検索します。
+'
+' PARAMS   : arr   - 削除対象の配列
+'            index - 削除する位置インデックス
+'
+' RETURN   : 削除された要素
+'
+'------------------------------------------------------------------------------
+Public Function RemoveAt(ByRef arr As Variant, ByVal index As Long) As Variant
+    Dim i       As Long
+    Dim idx     As Long
+
+    idx = ActualIndex(arr, index)
+
+    Call CheckBound(arr, idx)
+
+    If IsObject(arr(idx)) Then
+        Set RemoveAt = arr(idx)
+    Else
+        RemoveAt = arr(idx)
+    End If
+
+    For i = idx To UBound(arr) - 1
+        Call SetAt(arr, i, arr(i + 1))
+    Next
+    Call Resize(arr, -1)
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された配列の指定した位置インデックスに要素を設定します。
+'            位置インデックスに負数を指定すると配列の後方からの位置インデックス
+'            として検索します。
+'
+' PARAMS   : arr   - 設定対象の配列
+'            index - 設定する位置インデックス
+'            item  - 設定する要素
+'
+' RETURN   : 設定前に指定した位置インデックスにあった要素
+'
+'------------------------------------------------------------------------------
+Public Function SetAt(ByRef arr As Variant, ByVal index As Long, ByRef item As Variant) As Variant
+    Dim idx     As Long
+
+    idx = ActualIndex(arr, index)
+
+    If IsObject(arr(idx)) Then
+        Set SetAt = arr(idx)
+    Else
+        SetAt = arr(idx)
+    End If
+
+    If IsObject(item) Then
+        Set arr(idx) = item
+    Else
+        arr(idx) = item
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された動的配列の先頭の要素を削除します。
+'
+' PARAMS   : arr - 削除対象の配列
+'
+' RETURN   : 削除した要素
+'
+'------------------------------------------------------------------------------
+Public Function Shift(ByRef arr As Variant) As Variant
+    Dim lIdx    As Long
+
+    lIdx = LBound(arr)
+    If IsObject(arr(lIdx)) Then
+        Set Shift = arr(lIdx)
+    Else
+        Shift = arr(lIdx)
+    End If
+
+    Call RemoveAt(arr, lIdx)
+
+End Function
+
+'------------------------------------------------------------------------------
+'
 ' FUNCTION : 指定された配列の要素を昇順にソートします。
 '            すべての要素が不等号演算子による比較が可能であることが前提条件です。
 '            CompareToメソッドを実装したオブジェクトの配列も引数にできます。
@@ -392,6 +718,53 @@ Public Sub Sort(ByRef arr As Variant)
     Else
         Call QuickSort(arr, LBound(arr), UBound(arr))
     End If
+
+End Sub
+
+'------------------------------------------------------------------------------
+'
+' FUNCTION : 指定された動的配列の先頭に要素を追加します。
+'
+' PARAMS   : arr  - 追加対象の配列
+'            item - 追加する要素
+'
+'------------------------------------------------------------------------------
+Public Sub Unshift(ByRef arr As Variant, ByRef item As Variant)
+
+    Call Add(arr, 0, item)
+
+End Sub
+
+Private Function ActualIndex(ByRef arr As Variant, ByVal index As Long) As Long
+
+    If 0 <= index Then
+        ActualIndex = index
+    Else
+        ActualIndex = UBound(arr) + index + 1
+    End If
+
+End Function
+
+Private Sub CheckBound(ByRef arr As Variant, ByVal index As Long)
+
+    If index < LBound(arr) Or UBound(arr) < index Then
+        Call Err.Raise(9)
+    End If
+
+End Sub
+
+Private Sub CheckBoundForInsert(ByRef arr As Variant, ByVal index As Long)
+
+    If index < LBound(arr) Or UBound(arr) + 1 < index Then
+        Call Err.Raise(9)
+    End If
+
+End Sub
+
+Private Sub Init(ByRef arr As Variant, ByRef item As Variant)
+
+    ReDim arr(0)
+    Call SetAt(arr, 0, item)
 
 End Sub
 
@@ -460,5 +833,15 @@ Private Sub QuickObjSort(ByRef arr As Variant, ByVal left As Long, ByVal right A
 
     Call QuickObjSort(arr, left, i - 1)
     Call QuickObjSort(arr, j + 1, right)
+
+End Sub
+
+Private Sub Resize(ByRef arr As Variant, ByVal size As Long)
+
+    If LBound(arr) <= UBound(arr) + size Then
+        ReDim Preserve arr(LBound(arr) To UBound(arr) + size)
+    Else
+        Erase arr
+    End If
 
 End Sub
