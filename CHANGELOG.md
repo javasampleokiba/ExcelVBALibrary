@@ -15,3 +15,19 @@ ArrayUtilsモジュールに以下の関数を追加。<br>
 ・IndicesOf<br>
 ・LastIndexOf<br>
 ・LastIndicesOf
+
+## 2021/03/13
+ArrayUtilsモジュールに以下の関数を追加。<br>
+・Add<br>
+・Concat<br>
+・First<br>
+・GetAt<br>
+・Last<br>
+・Pop<br>
+・Push<br>
+・Remove<br>
+・RemoveAll<br>
+・RemoveAt<br>
+・SetAt<br>
+・Shift<br>
+・Unshift
