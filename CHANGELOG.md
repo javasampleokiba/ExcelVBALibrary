@@ -8,43 +8,12 @@ JapaneseHolidayUtils、BusinessDayCalculatorモジュール追加。
 
 ## 2021/01/31
 ArrayUtilsモジュールに以下の関数を追加。<br>
-・Contains<br>
-・ContainsAll<br>
-・ContainsAny<br>
-・IndexOf<br>
-・IndicesOf<br>
-・LastIndexOf<br>
-・LastIndicesOf
+Contains, ContainsAll, ContainsAny, IndexOf, IndicesOf, LastIndexOf, LastIndicesOf
 
 ## 2021/03/13
 ArrayUtilsモジュールに以下の関数を追加。<br>
-・Add<br>
-・Concat<br>
-・First<br>
-・GetAt<br>
-・Last<br>
-・Pop<br>
-・Push<br>
-・Remove<br>
-・RemoveAll<br>
-・RemoveAt<br>
-・SetAt<br>
-・Shift<br>
-・Unshift
+Add, Concat, First, GetAt, Last, Pop, Push, Remove, RemoveAll, RemoveAt, SetAt, Shift, Unshift
 
 ## 2021/03/20
 ArrayUtilsモジュールに以下の関数を追加。<br>
-・Count<br>
-・Fill<br>
-・Join<br>
-・Replace<br>
-・ReplaceLast<br>
-・Reverse<br>
-・Rotate<br>
-・Sample<br>
-・Shuffle<br>
-・Slice<br>
-・Splice<br>
-・Swap<br>
-・Unique<br>
-・ValuesAt
+Count, Fill, Join, Replace, ReplaceLast, Reverse, Rotate, Sample, Shuffle, Slice, Splice, Swap, Unique, ValuesAt
