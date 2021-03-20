@@ -16,12 +16,14 @@ Public Sub TestAll(ByVal arr As Variant)
     Call TestContains
     Call TestContainsAll
     Call TestContainsAny
+    Call TestFill
     Call TestFirst
     Call TestGetAt
     Call TestIndexOf
     Call TestIndicesOf
     Call TestIsEmptyArray(arr)
     Call TestIsEqual(arr)
+    Call TestJoin(arr)
     Call TestLast
     Call TestLastIndexOf
     Call TestLastIndicesOf
@@ -31,10 +33,21 @@ Public Sub TestAll(ByVal arr As Variant)
     Call TestRemove
     Call TestRemoveAll
     Call TestRemoveAt
+    Call TestReplace
+    Call TestReplaceLast
+    Call TestReverse
+    Call TestRotate
+    Call TestSample
     Call TestSetAt
     Call TestShift
+    Call TestShuffle
+    Call TestSlice
     Call TestSort
+    Call TestSplice
+    Call TestSwap
+    Call TestUnique
     Call TestUnshift
+    Call TestValuesAt
 
 End Sub
 
@@ -265,6 +278,114 @@ Private Sub TestContainsAny()
 
 End Sub
 
+Private Sub TestCount()
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 6)     As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestCount ---"
+
+    ' 空配列の場合
+    Call PrintResult(ArrayUtils.Count(emptyArr, 1) = 0, 1)
+
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+    arr(4) = 2
+    arr(5) = 3
+    arr(6) = 3
+
+    Call PrintResult(ArrayUtils.Count(arr, 0) = 0, 2)
+    Call PrintResult(ArrayUtils.Count(arr, 1) = 1, 3)
+    Call PrintResult(ArrayUtils.Count(arr, 3) = 3, 4)
+
+    arr(1) = 0
+    arr(2) = 0
+    arr(3) = 0
+    arr(4) = 0
+    arr(5) = 0
+    arr(6) = 0
+
+    Call PrintResult(ArrayUtils.Count(arr, 0) = 6, 5)
+
+    ' オブジェクト型でも確認
+    Set obj = New MyClass
+    Set arr(1) = obj
+    Set arr(2) = New MyClass
+    Set arr(3) = New MyClass
+    Set arr(4) = obj
+    Set arr(5) = New MyClass
+    Set arr(6) = obj
+
+    Call PrintResult(ArrayUtils.Count(arr, obj) = 3, 6)
+
+End Sub
+
+Private Sub TestFill()
+    Dim emptyArr()      As Variant
+    Dim arr1(1 To 1)    As Variant
+    Dim arr2(1 To 6)    As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestFill ---"
+
+    ' 空配列の場合
+    Call ArrayUtils.Fill(emptyArr, 1)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    arr1(1) = 1
+
+    Call ArrayUtils.Fill(arr1, 1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(1)", 2)
+    Call ArrayUtils.Fill(arr1, 2, 1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(2)", 3)
+    Call ArrayUtils.Fill(arr1, 3, 1, 1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(3)", 4)
+
+    arr2(1) = 0
+    arr2(2) = 0
+    arr2(3) = 0
+    arr2(4) = 0
+    arr2(5) = 0
+    arr2(6) = 0
+
+    ' 配列インデックス範囲外の場合
+    On Error Resume Next
+    Call ArrayUtils.Fill(arr2, 1, 7)
+    Call PrintResult(Err.Number = 9, "5-1")
+    Call PrintResult(LangUtils.ToString(arr2) = "(0, 0, 0, 0, 0, 0)", "5-2")
+    On Error GoTo 0
+
+    Call ArrayUtils.Fill(arr2, 1)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 1, 1, 1, 1, 1)", 6)
+    Call ArrayUtils.Fill(arr2, 2, 1)
+    Call PrintResult(LangUtils.ToString(arr2) = "(2, 2, 2, 2, 2, 2)", 7)
+    Call ArrayUtils.Fill(arr2, 3, 4)
+    Call PrintResult(LangUtils.ToString(arr2) = "(2, 2, 2, 3, 3, 3)", 8)
+    Call ArrayUtils.Fill(arr2, 4, 6)
+    Call PrintResult(LangUtils.ToString(arr2) = "(2, 2, 2, 3, 3, 4)", 9)
+    Call ArrayUtils.Fill(arr2, 5, 1, 4)
+    Call PrintResult(LangUtils.ToString(arr2) = "(5, 5, 5, 5, 3, 4)", 10)
+    Call ArrayUtils.Fill(arr2, 6, 1, 6)
+    Call PrintResult(LangUtils.ToString(arr2) = "(6, 6, 6, 6, 6, 6)", 11)
+    Call ArrayUtils.Fill(arr2, 7, 3, 2)
+    Call PrintResult(LangUtils.ToString(arr2) = "(6, 6, 7, 7, 6, 6)", 12)
+    Call ArrayUtils.Fill(arr2, 8, 6, 1)
+    Call PrintResult(LangUtils.ToString(arr2) = "(6, 6, 7, 7, 6, 8)", 13)
+    Call ArrayUtils.Fill(arr2, 9, -1)
+    Call PrintResult(LangUtils.ToString(arr2) = "(6, 6, 7, 7, 6, 9)", 14)
+    Call ArrayUtils.Fill(arr2, 10, -6, 7)
+    Call PrintResult(LangUtils.ToString(arr2) = "(10, 10, 10, 10, 10, 10)", 15)
+
+    ' オブジェクト型でも確認
+    Set obj = New MyClass
+
+    Call ArrayUtils.Fill(arr2, obj)
+    Call PrintResult(arr2(1) Is obj, "16-1")
+    Call PrintResult(arr2(6) Is obj, "16-2")
+
+End Sub
+
 Private Sub TestFirst()
     Dim emptyArr()      As Variant
     Dim arr()           As Variant
@@ -481,6 +602,21 @@ Private Sub TestIsEqual(ByVal arr As Variant)
 
 End Sub
 
+Private Sub TestJoin(ByVal arr As Variant)
+    Dim emptyArr()      As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestJoin ---"
+
+    ' 配列以外の場合
+    Call ArrayUtils.Join(emptyArr, ",")
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    Debug.Print ArrayUtils.Join(arr)
+    Debug.Print ArrayUtils.Join(arr, " | ")
+
+End Sub
+
 Private Sub TestLast()
     Dim emptyArr()      As Variant
     Dim arr()           As Variant
@@ -653,7 +789,7 @@ Private Sub TestPop()
 
     Set removed = ArrayUtils.Pop(arr)
     Call PrintResult(removed Is obj, 8)
-    Call PrintResult(Length(arr) = 2, 9)
+    Call PrintResult(ArrayUtils.Length(arr) = 2, 9)
 
 End Sub
 
@@ -811,6 +947,282 @@ Private Sub TestRemoveAt()
 
 End Sub
 
+Private Sub TestReplace()
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 6)     As Variant
+    Dim obj1            As Variant
+    Dim obj2            As Variant
+
+    Debug.Print "--- TestReplace ---"
+
+    ' 空配列の場合
+    Call PrintResult(ArrayUtils.Replace(emptyArr, 1, "A") = 0, "1-1")
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", "1-2")
+
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+    arr(4) = 2
+    arr(5) = 3
+    arr(6) = 3
+
+    Call PrintResult(ArrayUtils.Replace(arr, 1, "A") = 1, "2-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, 2, 3, 2, 3, 3)", "2-2")
+
+    Call PrintResult(ArrayUtils.Replace(arr, 2, "B") = 2, "3-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, 3, B, 3, 3)", "3-2")
+
+    Call PrintResult(ArrayUtils.Replace(arr, 3, "C", 1) = 1, "4-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C, B, 3, 3)", "4-2")
+
+    arr(1) = 1
+    arr(2) = 1
+    arr(3) = 1
+    arr(4) = 1
+    arr(5) = 1
+    arr(6) = 1
+
+    Call PrintResult(ArrayUtils.Replace(arr, 1, "A") = 6, "5-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, A, A, A, A, A)", "5-2")
+
+    Call PrintResult(ArrayUtils.Replace(arr, "A", "B", 7) = 6, "6-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(B, B, B, B, B, B)", "6-2")
+
+    ' オブジェクト型でも確認
+    Set obj1 = New MyClass
+    Set obj2 = New MyClass
+    Set arr(1) = obj1
+    Set arr(2) = obj1
+    Set arr(3) = obj1
+
+    Call PrintResult(ArrayUtils.Replace(arr, obj1, obj2) = 3, "7-1")
+    Call PrintResult(arr(3) Is obj2, "7-2")
+
+End Sub
+
+Private Sub TestReplaceLast()
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 6)     As Variant
+    Dim obj1            As Variant
+    Dim obj2            As Variant
+
+    Debug.Print "--- TestReplaceLast ---"
+
+    ' 空配列の場合
+    Call PrintResult(ArrayUtils.ReplaceLast(emptyArr, 1, "A") = 0, "1-1")
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", "1-2")
+
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+    arr(4) = 2
+    arr(5) = 3
+    arr(6) = 3
+
+    Call PrintResult(ArrayUtils.ReplaceLast(arr, 1, "A") = 1, "2-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, 2, 3, 2, 3, 3)", "2-2")
+
+    Call PrintResult(ArrayUtils.ReplaceLast(arr, 2, "B") = 2, "3-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, 3, B, 3, 3)", "3-2")
+
+    Call PrintResult(ArrayUtils.ReplaceLast(arr, 3, "C", 1) = 1, "4-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, 3, B, 3, C)", "4-2")
+
+    arr(1) = 1
+    arr(2) = 1
+    arr(3) = 1
+    arr(4) = 1
+    arr(5) = 1
+    arr(6) = 1
+
+    Call PrintResult(ArrayUtils.ReplaceLast(arr, 1, "A") = 6, "5-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(A, A, A, A, A, A)", "5-2")
+
+    Call PrintResult(ArrayUtils.ReplaceLast(arr, "A", "B", 7) = 6, "6-1")
+    Call PrintResult(LangUtils.ToString(arr) = "(B, B, B, B, B, B)", "6-2")
+
+    ' オブジェクト型でも確認
+    Set obj1 = New MyClass
+    Set obj2 = New MyClass
+    Set arr(1) = obj1
+    Set arr(2) = obj1
+    Set arr(3) = obj1
+
+    Call PrintResult(ArrayUtils.ReplaceLast(arr, obj1, obj2) = 3, "7-1")
+    Call PrintResult(arr(1) Is obj2, "7-2")
+
+End Sub
+
+Private Sub TestReverse()
+    Dim emptyArr()      As Variant
+    Dim arr1(1 To 1)    As Variant
+    Dim arr2(1 To 3)    As Variant
+    Dim arr3(1 To 6)    As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestReverse ---"
+
+    ' 空配列の場合
+    Call ArrayUtils.Reverse(emptyArr)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    arr1(1) = 1
+
+    Call ArrayUtils.Reverse(arr1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(1)", 2)
+
+    arr2(1) = 1
+    arr2(2) = 2
+    arr2(3) = 3
+
+    Call ArrayUtils.Reverse(arr2)
+    Call PrintResult(LangUtils.ToString(arr2) = "(3, 2, 1)", 3)
+
+    arr3(1) = 1
+    arr3(2) = 2
+    arr3(3) = 3
+    arr3(4) = 4
+    arr3(5) = 5
+    arr3(6) = 6
+
+    Call ArrayUtils.Reverse(arr3)
+    Call PrintResult(LangUtils.ToString(arr3) = "(6, 5, 4, 3, 2, 1)", 4)
+
+    ' オブジェクト型でも確認
+    Set obj = New MyClass
+    Set arr3(1) = obj
+
+    Call ArrayUtils.Reverse(arr3)
+    Call PrintResult(arr3(6) Is obj, 5)
+
+End Sub
+
+Private Sub TestRotate()
+    Dim emptyArr()      As Variant
+    Dim arr1(1 To 1)    As Variant
+    Dim arr2(1 To 6)    As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestRotate ---"
+
+    ' 空配列の場合
+    Call ArrayUtils.Rotate(emptyArr, 1)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    arr1(1) = 1
+
+    ' 要素が一つの場合
+    Call ArrayUtils.Rotate(arr1, 0)
+    Call PrintResult(LangUtils.ToString(arr1) = "(1)", 2)
+    Call ArrayUtils.Rotate(arr1, 1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(1)", 3)
+    Call ArrayUtils.Rotate(arr1, -1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(1)", 4)
+
+    arr2(1) = 1
+    arr2(2) = 2
+    arr2(3) = 3
+    arr2(4) = 4
+    arr2(5) = 5
+    arr2(6) = 6
+
+    ' 位置が変わらない場合
+    Call ArrayUtils.Rotate(arr2, 0)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 2, 3, 4, 5, 6)", 5)
+    Call ArrayUtils.Rotate(arr2, 6)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 2, 3, 4, 5, 6)", 6)
+    Call ArrayUtils.Rotate(arr2, -12)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 2, 3, 4, 5, 6)", 7)
+
+    ' 位置が変わる場合
+    Call ArrayUtils.Rotate(arr2, 1)
+    Call PrintResult(LangUtils.ToString(arr2) = "(6, 1, 2, 3, 4, 5)", 8)
+    Call ArrayUtils.Rotate(arr2, -1)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 2, 3, 4, 5, 6)", 9)
+    Call ArrayUtils.Rotate(arr2, 3)
+    Call PrintResult(LangUtils.ToString(arr2) = "(4, 5, 6, 1, 2, 3)", 10)
+    Call ArrayUtils.Rotate(arr2, -3)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 2, 3, 4, 5, 6)", 11)
+    Call ArrayUtils.Rotate(arr2, 10)
+    Call PrintResult(LangUtils.ToString(arr2) = "(3, 4, 5, 6, 1, 2)", 12)
+    Call ArrayUtils.Rotate(arr2, -10)
+    Call PrintResult(LangUtils.ToString(arr2) = "(1, 2, 3, 4, 5, 6)", 13)
+
+    ' オブジェクト型でも確認
+    Set obj = New MyClass
+    Set arr2(1) = obj
+
+    Call ArrayUtils.Rotate(arr2, 5)
+    Call PrintResult(arr2(6) Is obj, 14)
+
+End Sub
+
+Private Sub TestSample()
+    Dim i               As Long
+    Dim emptyArr()      As Variant
+    Dim arr1(1 To 1)    As Variant
+    Dim arr2(1 To 7)    As Variant
+    Dim result()        As Variant
+
+    Debug.Print "--- TestSample ---"
+
+    ' 空配列の場合
+    On Error Resume Next
+    Call ArrayUtils.Sample(emptyArr)
+    Call PrintResult(Err.Number <> 0, 1)
+    On Error GoTo 0
+
+    arr1(1) = 1
+
+    result = ArrayUtils.Sample(arr1)
+    Debug.Print LangUtils.ToString(result)
+
+    result = ArrayUtils.Sample(arr1, 1)
+    Debug.Print LangUtils.ToString(result)
+
+    result = ArrayUtils.Sample(arr1, 2)
+    Debug.Print LangUtils.ToString(result)
+
+    arr2(1) = 1
+    arr2(2) = 2
+    arr2(3) = 3
+    arr2(4) = 4
+    arr2(5) = 5
+    arr2(6) = 6
+    Set arr2(7) = New MyClass
+
+    result = ArrayUtils.Sample(arr2)
+
+    Debug.Print "ランダムに一つ取得"
+    For i = 1 To 5
+        result = ArrayUtils.Sample(arr2)
+        Debug.Print "  " & LangUtils.ToString(result)
+    Next
+
+    Debug.Print "ランダムに複数取得(重複なし)"
+    For i = 1 To 5
+        result = ArrayUtils.Sample(arr2, 3)
+        Debug.Print "  " & LangUtils.ToString(result)
+    Next
+    For i = 1 To 5
+        result = ArrayUtils.Sample(arr2, 7)
+        Debug.Print "  " & LangUtils.ToString(result)
+    Next
+    result = ArrayUtils.Sample(arr2, 8)
+    Debug.Print "  " & LangUtils.ToString(result)
+
+    Debug.Print "ランダムに複数取得(重複あり)"
+    For i = 1 To 5
+        result = ArrayUtils.Sample(arr2, 3, False)
+        Debug.Print "  " & LangUtils.ToString(result)
+    Next
+    For i = 1 To 5
+        result = ArrayUtils.Sample(arr2, 7, False)
+        Debug.Print "  " & LangUtils.ToString(result)
+    Next
+
+End Sub
+
 Private Sub TestSetAt()
     Dim emptyArr()      As Variant
     Dim arr()           As Variant
@@ -903,6 +1315,89 @@ Private Sub TestShift()
 
 End Sub
 
+Private Sub TestShuffle()
+    Dim i               As Long
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 6)     As Variant
+
+    Debug.Print "--- TestShuffle ---"
+
+    ' 空配列の場合
+    Call ArrayUtils.Shuffle(emptyArr)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+    arr(4) = 4
+    arr(5) = 5
+    Set arr(6) = New MyClass
+
+    For i = 1 To 10
+        Call ArrayUtils.Shuffle(arr)
+        Debug.Print LangUtils.ToString(arr)
+    Next
+
+End Sub
+
+Private Sub TestSlice()
+    Dim i               As Long
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 6)     As Variant
+    Dim result()        As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestSlice ---"
+
+    ' 空配列の場合
+    On Error Resume Next
+    result = ArrayUtils.Slice(emptyArr)
+    Call PrintResult(Err.Number <> 0, 1)
+    On Error GoTo 0
+
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+    arr(4) = 4
+    arr(5) = 5
+    arr(6) = 6
+
+    result = ArrayUtils.Slice(arr)
+    Call PrintResult(LangUtils.ToString(result) = "(1, 2, 3, 4, 5, 6)", 2)
+
+    result = ArrayUtils.Slice(arr, 1)
+    Call PrintResult(LangUtils.ToString(result) = "(1, 2, 3, 4, 5, 6)", 3)
+
+    result = ArrayUtils.Slice(arr, 4)
+    Call PrintResult(LangUtils.ToString(result) = "(4, 5, 6)", 4)
+
+    result = ArrayUtils.Slice(arr, 6)
+    Call PrintResult(LangUtils.ToString(result) = "(6)", 5)
+
+    result = ArrayUtils.Slice(arr, 1, 7)
+    Call PrintResult(LangUtils.ToString(result) = "(1, 2, 3, 4, 5, 6)", 6)
+
+    result = ArrayUtils.Slice(arr, 1, 4)
+    Call PrintResult(LangUtils.ToString(result) = "(1, 2, 3)", 7)
+
+    result = ArrayUtils.Slice(arr, 5, 6)
+    Call PrintResult(LangUtils.ToString(result) = "(5)", 8)
+
+    result = ArrayUtils.Slice(arr, 3, 3)
+    Call PrintResult(LangUtils.ToString(result) = "()", 9)
+
+    result = ArrayUtils.Slice(arr, 7, 7)
+    Call PrintResult(LangUtils.ToString(result) = "()", 10)
+
+    ' オブジェクト型でも確認
+    Set obj = New MyClass
+    Set arr(1) = obj
+
+    result = ArrayUtils.Slice(arr, 1, 2)
+    Call PrintResult(result(0) Is obj, 11)
+
+End Sub
+
 Private Sub TestSort()
     Dim i               As Long
     Dim arr1(1000)      As Long
@@ -982,6 +1477,237 @@ Private Sub TestSort()
 
 End Sub
 
+Private Sub TestSplice()
+    Dim emptyArr()      As Variant
+    Dim arr()           As Variant
+    Dim added()         As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestSplice ---"
+
+    added = Array("A", "B", "C")
+
+    ' 空配列の場合
+    Call ArrayUtils.Splice(emptyArr, 0)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    Call ArrayUtils.Splice(emptyArr, 0, 0, emptyArr)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 2)
+
+    Call ArrayUtils.Splice(emptyArr, 0, 0, added)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "(A, B, C)", 3)
+
+    On Error Resume Next
+    Call ArrayUtils.Splice(emptyArr, 10, 0, added)
+    Call PrintResult(Err.Number = 9, 4)
+    On Error GoTo 0
+
+    ' 削除のみ
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0)
+    Call PrintResult(LangUtils.ToString(arr) = "()", 5)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 3)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3)", 6)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 5)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5)", 7)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 6)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5, 6)", 8)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 1)
+    Call PrintResult(LangUtils.ToString(arr) = "(2, 3, 4, 5, 6)", 9)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 3)
+    Call PrintResult(LangUtils.ToString(arr) = "(4, 5, 6)", 10)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 6)
+    Call PrintResult(LangUtils.ToString(arr) = "()", 11)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 7)
+    Call PrintResult(LangUtils.ToString(arr) = "()", 12)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 1)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 4, 5, 6)", 13)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 3)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 6)", 14)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 4)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2)", 15)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 5)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2)", 16)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 5, 1)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5)", 17)
+
+    emptyArr = Array()
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 5, 1, emptyArr)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5)", 18)
+
+    ' 追加のみ
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 0, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C, 1, 2, 3, 4, 5, 6)", 19)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 0, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, A, B, C, 3, 4, 5, 6)", 20)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 5, 0, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5, A, B, C, 6)", 21)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 6, 0, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5, 6, A, B, C)", 22)
+
+    ' 削除しつつ追加
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 1, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C, 2, 3, 4, 5, 6)", 23)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 3, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C, 4, 5, 6)", 24)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 5, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C, 6)", 25)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 6, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C)", 26)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 0, 7, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(A, B, C)", 27)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 1, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, A, B, C, 4, 5, 6)", 28)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 3, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, A, B, C, 6)", 29)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 4, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, A, B, C)", 30)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 5, 1, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5, A, B, C)", 31)
+
+    arr = Array(1, 2, 3, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 6, 1, added)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3, 4, 5, 6, A, B, C)", 32)
+
+    ' オブジェクト型でも確認
+    Set obj = New MyClass
+    arr = Array(1, 2, New MyClass, 4, 5, 6)
+    Call ArrayUtils.Splice(arr, 2, 1, Array(obj))
+    Call PrintResult(arr(2) Is obj, 33)
+
+End Sub
+
+Private Sub TestSwap()
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 3)     As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestSwap ---"
+
+    ' 空配列の場合
+    On Error Resume Next
+    Call ArrayUtils.Swap(emptyArr, 0, 1)
+    Call PrintResult(Err.Number <> 0, 1)
+    On Error GoTo 0
+
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+
+    Call ArrayUtils.Swap(arr, 1, 1)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3)", 2)
+
+    Call ArrayUtils.Swap(arr, 1, 3)
+    Call PrintResult(LangUtils.ToString(arr) = "(3, 2, 1)", 3)
+
+    Call ArrayUtils.Swap(arr, 3, 2)
+    Call PrintResult(LangUtils.ToString(arr) = "(3, 1, 2)", 4)
+
+    Set obj = New MyClass
+    Set arr(1) = obj
+    Set arr(2) = New MyClass
+    Set arr(3) = New MyClass
+
+    ' オブジェクト型でも確認
+    Call ArrayUtils.Swap(arr, 1, 2)
+    Call PrintResult(arr(2) Is obj, 5)
+
+End Sub
+
+Private Sub TestUnique()
+    Dim emptyArr()      As Variant
+    Dim arr             As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestUnique ---"
+
+    ' 空配列の場合
+    Call ArrayUtils.Unique(emptyArr)
+    Call PrintResult(LangUtils.ToString(emptyArr) = "()", 1)
+
+    arr = Array(1)
+
+    Call ArrayUtils.Unique(arr)
+    Call PrintResult(LangUtils.ToString(arr) = "(1)", 2)
+
+    arr = Array(1, 2, 3)
+
+    Call ArrayUtils.Unique(arr)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3)", 3)
+
+    arr = Array(1, 2, 3, 2, 3, 3)
+
+    Call ArrayUtils.Unique(arr)
+    Call PrintResult(LangUtils.ToString(arr) = "(1, 2, 3)", 4)
+
+    arr = Array(4, 1, 1, 4, 1, 5)
+
+    Call ArrayUtils.Unique(arr)
+    Call PrintResult(LangUtils.ToString(arr) = "(4, 1, 5)", 5)
+
+    arr = Array(1, 1, 1, 1, 1, 1)
+
+    Call ArrayUtils.Unique(arr)
+    Call PrintResult(LangUtils.ToString(arr) = "(1)", 6)
+
+    Set obj = New MyClass
+    arr = Array(obj, obj, obj)
+
+    ' オブジェクト型でも確認
+    Call ArrayUtils.Unique(arr)
+    Call PrintResult(ArrayUtils.Length(arr) = 1, 7)
+
+End Sub
+
 Private Sub TestUnshift()
     Dim emptyArr()      As Variant
     Dim arr()           As Variant
@@ -1002,5 +1728,45 @@ Private Sub TestUnshift()
     Set obj = New MyClass
     Call ArrayUtils.Unshift(arr, obj)
     Call PrintResult(arr(0) Is obj, 3)
+
+End Sub
+
+Private Sub TestValuesAt()
+    Dim emptyArr()      As Variant
+    Dim arr(1 To 6)     As Variant
+    Dim result()        As Variant
+    Dim obj             As Variant
+
+    Debug.Print "--- TestValuesAt ---"
+
+    ' 空配列の場合
+    On Error Resume Next
+    result = ArrayUtils.ValuesAt(emptyArr, 1)
+    Call PrintResult(Err.Number <> 0, 1)
+    On Error GoTo 0
+
+    Set obj = New MyClass
+    arr(1) = 1
+    arr(2) = 2
+    arr(3) = 3
+    arr(4) = 4
+    arr(5) = 5
+    Set arr(6) = obj
+
+    result = ArrayUtils.ValuesAt(arr)
+    Call PrintResult(LangUtils.ToString(result) = "()", 2)
+
+    result = ArrayUtils.ValuesAt(arr, 1)
+    Call PrintResult(LangUtils.ToString(result) = "(1)", 3)
+
+    result = ArrayUtils.ValuesAt(arr, 1, 6)
+    Call PrintResult(result(0) = 1, "4-1")
+    Call PrintResult(result(1) Is obj, "4-2")
+
+    result = ArrayUtils.ValuesAt(arr, Array(1, 2, 3))
+    Call PrintResult(LangUtils.ToString(result) = "(1, 2, 3)", 5)
+
+    result = ArrayUtils.ValuesAt(arr, 1, 2, Array(3, 4), 5, 1)
+    Call PrintResult(LangUtils.ToString(result) = "(1, 2, 3, 4, 5, 1)", 6)
 
 End Sub
