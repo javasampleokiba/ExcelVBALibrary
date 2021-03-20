@@ -31,3 +31,20 @@ ArrayUtilsモジュールに以下の関数を追加。<br>
 ・SetAt<br>
 ・Shift<br>
 ・Unshift
+
+## 2021/03/20
+ArrayUtilsモジュールに以下の関数を追加。<br>
+・Count<br>
+・Fill<br>
+・Join<br>
+・Replace<br>
+・ReplaceLast<br>
+・Reverse<br>
+・Rotate<br>
+・Sample<br>
+・Shuffle<br>
+・Slice<br>
+・Splice<br>
+・Swap<br>
+・Unique<br>
+・ValuesAt
