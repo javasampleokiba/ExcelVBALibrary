@@ -17,3 +17,7 @@ Add, Concat, First, GetAt, Last, Pop, Push, Remove, RemoveAll, RemoveAt, SetAt, 
 ## 2021/03/20
 ArrayUtilsモジュールに以下の関数を追加。<br>
 Count, Fill, Join, Replace, ReplaceLast, Reverse, Rotate, Sample, Shuffle, Slice, Splice, Swap, Unique, ValuesAt
+
+## 2021/04/11
+ArrayUtilsモジュールに以下の関数を追加。<br>
+CBoolArray、CByteArray、CCurArray、CDateArray、CDblArray、CIntArray、CLngArray、CSngArray、CStrArray、Flatten
