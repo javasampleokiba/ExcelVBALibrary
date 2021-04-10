@@ -46,6 +46,222 @@ Public Sub Add(ByRef arr As Variant, ByVal index As Long, ByRef item As Variant)
 End Sub
 
 '------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をBoolean型の配列に変換して返します。
+'            CBool関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CBoolArray(ParamArray arr() As Variant) As Boolean()
+    Dim i           As Long
+    Dim result()    As Boolean
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CBool(temp(i))
+        Next
+    End If
+
+    CBoolArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をByte型の配列に変換して返します。
+'            CByte関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CByteArray(ParamArray arr() As Variant) As Byte()
+    Dim i           As Long
+    Dim result()    As Byte
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CByte(temp(i))
+        Next
+    End If
+
+    CByteArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をCurrency型の配列に変換して返します。
+'            CCur関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CCurArray(ParamArray arr() As Variant) As Currency()
+    Dim i           As Long
+    Dim result()    As Currency
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CCur(temp(i))
+        Next
+    End If
+
+    CCurArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をDate型の配列に変換して返します。
+'            CDate関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CDateArray(ParamArray arr() As Variant) As Date()
+    Dim i           As Long
+    Dim result()    As Date
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CDate(temp(i))
+        Next
+    End If
+
+    CDateArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をDouble型の配列に変換して返します。
+'            CDbl関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CDblArray(ParamArray arr() As Variant) As Double()
+    Dim i           As Long
+    Dim result()    As Double
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CDbl(temp(i))
+        Next
+    End If
+
+    CDblArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をInteger型の配列に変換して返します。
+'            CInt関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CIntArray(ParamArray arr() As Variant) As Integer()
+    Dim i           As Long
+    Dim result()    As Integer
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CInt(temp(i))
+        Next
+    End If
+
+    CIntArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をLong型の配列に変換して返します。
+'            CLng関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CLngArray(ParamArray arr() As Variant) As Long()
+    Dim i           As Long
+    Dim result()    As Long
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CLng(temp(i))
+        Next
+    End If
+
+    CLngArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をSingle型の配列に変換して返します。
+'            CSng関数でキャストできない要素が渡された場合はエラーを発出します。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CSngArray(ParamArray arr() As Variant) As Single()
+    Dim i           As Long
+    Dim result()    As Single
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = CSng(temp(i))
+        Next
+    End If
+
+    CSngArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素をString型の配列に変換して返します。
+'            キャストはLangUtils.ToString関数により行われます。
+'
+' PARAMS   : arr - 任意の数の要素
+'------------------------------------------------------------------------------
+Public Function CStrArray(ParamArray arr() As Variant) As String()
+    Dim i           As Long
+    Dim result()    As String
+    Dim temp()      As Variant
+
+    temp = Flatten(0, arr)
+
+    If Not IsEmptyArray(temp) Then
+        ReDim result(UBound(temp))
+        For i = 0 To UBound(temp)
+            result(i) = LangUtils.ToString(temp(i))
+        Next
+    End If
+
+    CStrArray = result
+
+End Function
+
+'------------------------------------------------------------------------------
 ' FUNCTION : 指定された動的配列に指定された配列を追加します。
 '
 ' PARAMS   : arr      - 追加対象の配列
@@ -245,6 +461,52 @@ Public Function First(ByRef arr As Variant) As Variant
     End If
 
 End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された任意の数の要素を一次元配列に平坦化して返します。
+'
+' PARAMS   : level - 平坦化の再帰の深さ
+'            arr   - 任意の数の要素
+'
+' RETURN   : 一次元配列
+'------------------------------------------------------------------------------
+Public Function Flatten(ByVal level As Integer, ParamArray arr() As Variant) As Variant()
+    Dim result()    As Variant
+    Dim item        As Variant
+
+    For Each item In arr
+        If IsArray(item) Then
+            Call Flatten_(result, 1, level, item)
+        Else
+            Call Push(result, item)
+        End If
+    Next
+
+    Flatten = result
+
+End Function
+
+Private Sub Flatten_(ByRef result() As Variant, ByVal curLevel As Integer, _
+                        ByVal level As Integer, ByRef arr As Variant)
+    Dim i       As Long
+
+    If IsEmptyArray(arr) Then
+        Exit Sub
+    End If
+
+    For i = LBound(arr) To UBound(arr)
+        If IsArray(arr(i)) Then
+            If curLevel = level Then
+                Call Push(result, arr(i))
+            Else
+                Call Flatten_(result, curLevel + 1, level, arr(i))
+            End If
+        Else
+            Call Push(result, arr(i))
+        End If
+    Next
+
+End Sub
 
 '------------------------------------------------------------------------------
 ' FUNCTION : 指定された配列から指定した位置インデックスの要素を取得します。
@@ -1242,45 +1504,19 @@ End Sub
 '
 ' RETURN   : 取り出した要素から成る配列
 '------------------------------------------------------------------------------
-Public Function ValuesAt(ByRef arr As Variant, ParamArray indices()) As Variant
-    Dim i           As Long
-    Dim j           As Long
-    Dim l           As Long
-    Dim cnt         As Long
-    Dim result()    As Variant
+Public Function ValuesAt(ByRef arr As Variant, ParamArray indices() As Variant) As Variant
+    Dim i                   As Long
+    Dim result()            As Variant
+    Dim flattenIndices()    As Long
 
-    ' 引数の長さを確認
-    l = 0
-    For i = 0 To UBound(indices)
-        If IsArray(indices(i)) Then
-            l = l + Length(indices(i))
-        Else
-            l = l + 1
-        End If
-    Next
-
-    ' 引数がない場合
-    If l = 0 Then
-        ValuesAt = result
-        Exit Function
+    flattenIndices = CLngArray(indices)
+    
+    If Not IsEmptyArray(flattenIndices) Then
+        ReDim result(UBound(flattenIndices))
+        For i = 0 To UBound(result)
+            Call SetAt(result, i, arr(flattenIndices(i)))
+        Next
     End If
-
-    ReDim result(l - 1)
-
-    cnt = 0
-    For i = 0 To UBound(indices)
-        If IsArray(indices(i)) Then
-            If Not IsEmptyArray(indices(i)) Then
-                For j = LBound(indices(i)) To UBound(indices(i))
-                    Call SetAt(result, cnt, arr(indices(i)(j)))
-                    cnt = cnt + 1
-                Next
-            End If
-        Else
-            Call SetAt(result, cnt, arr(indices(i)))
-            cnt = cnt + 1
-        End If
-    Next
 
     ValuesAt = result
 
