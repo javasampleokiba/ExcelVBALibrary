@@ -12,12 +12,22 @@ Public Sub TestAll(ByVal arr As Variant)
     Debug.Print "=== TestArrayUtils ==="
 
     Call TestAdd
+    Call TestCBoolArray
+    Call TestCByteArray
+    Call TestCCurArray
+    Call TestCDateArray
+    Call TestCDblArray
+    Call TestCIntArray
+    Call TestCLngArray
+    Call TestCSngArray
+    Call TestCStrArray
     Call TestConcat
     Call TestContains
     Call TestContainsAll
     Call TestContainsAny
     Call TestFill
     Call TestFirst
+    Call TestFlatten
     Call TestGetAt
     Call TestIndexOf
     Call TestIndicesOf
@@ -96,6 +106,199 @@ Private Sub TestAdd()
     Set obj = New MyClass
     Call ArrayUtils.Add(arr, 1, obj)
     Call PrintResult(arr(1) Is obj, 8)
+
+End Sub
+
+Private Sub TestCBoolArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Boolean
+
+    Debug.Print "--- TestCBoolArray ---"
+
+    actual = ArrayUtils.CBoolArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CBoolArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CBoolArray(True, False, "true", 0)
+    Call PrintResult(LangUtils.ToString(actual) = "(True, False, True, False)", 3)
+
+    actual = ArrayUtils.CBoolArray(True, Array(False, Array(True, Array(False, emptyArr, False))))
+    Call PrintResult(LangUtils.ToString(actual) = "(True, False, True, False, False)", 4)
+
+End Sub
+
+Private Sub TestCByteArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Byte
+
+    Debug.Print "--- TestCByteArray ---"
+
+    actual = ArrayUtils.CByteArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CByteArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CByteArray(1, 2, "3", "4.1")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4)", 3)
+
+    actual = ArrayUtils.CByteArray(1, Array(2, Array(3, Array(4, emptyArr, 5))))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4, 5)", 4)
+
+End Sub
+
+Private Sub TestCCurArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Currency
+
+    Debug.Print "--- TestCCurArray ---"
+
+    actual = ArrayUtils.CCurArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CCurArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CCurArray(1, 2, "3", "4.1")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4.1)", 3)
+
+    actual = ArrayUtils.CCurArray(1, Array(2, Array(3, Array(4, emptyArr, 5))))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4, 5)", 4)
+
+End Sub
+
+Private Sub TestCDateArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Date
+
+    Debug.Print "--- TestCDateArray ---"
+
+    actual = ArrayUtils.CDateArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CDateArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CDateArray("2021/4/10", 40000.001)
+    Call PrintResult(LangUtils.ToString(actual) = "(2021/04/10, 2009/07/06 0:01:26)", 3)
+
+    actual = ArrayUtils.CDateArray("2021/4/1", Array("2021/4/2", Array("2021/4/3", Array("2021/4/4", emptyArr, "2021/4/5"))))
+    Call PrintResult(LangUtils.ToString(actual) = "(2021/04/01, 2021/04/02, 2021/04/03, 2021/04/04, 2021/04/05)", 4)
+
+End Sub
+
+Private Sub TestCDblArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Double
+
+    Debug.Print "--- TestCDblArray ---"
+
+    actual = ArrayUtils.CDblArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CDblArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CDblArray(1, 2, "3", "4.1")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4.1)", 3)
+
+    actual = ArrayUtils.CDblArray(1, Array(2, Array(3, Array(4, emptyArr, 5))))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4, 5)", 4)
+
+End Sub
+
+Private Sub TestCIntArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Integer
+
+    Debug.Print "--- TestCIntArray ---"
+
+    actual = ArrayUtils.CIntArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CIntArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CIntArray(1, 2, "3", "4.1")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4)", 3)
+
+    actual = ArrayUtils.CIntArray(1, Array(2, Array(3, Array(4, emptyArr, 5))))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4, 5)", 4)
+
+End Sub
+
+Private Sub TestCLngArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Long
+
+    Debug.Print "--- TestCLngArray ---"
+
+    actual = ArrayUtils.CLngArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CLngArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CLngArray(1, 2, "3", "4.1")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4)", 3)
+
+    actual = ArrayUtils.CLngArray(1, Array(2, Array(3, Array(4, emptyArr, 5))))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4, 5)", 4)
+
+End Sub
+
+Private Sub TestCSngArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As Single
+
+    Debug.Print "--- TestCSngArray ---"
+
+    actual = ArrayUtils.CSngArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    On Error Resume Next
+    actual = ArrayUtils.CSngArray("A")
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    actual = ArrayUtils.CSngArray(1, 2, "3", "4.1")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4.1)", 3)
+
+    actual = ArrayUtils.CSngArray(1, Array(2, Array(3, Array(4, emptyArr, 5))))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, 4, 5)", 4)
+
+End Sub
+
+Private Sub TestCStrArray()
+    Dim emptyArr()      As Variant
+    Dim actual()        As String
+
+    Debug.Print "--- TestCStrArray ---"
+
+    actual = ArrayUtils.CStrArray(emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    actual = ArrayUtils.CStrArray(1, "A", True, ActiveSheet, Null, Empty)
+    Call PrintResult(LangUtils.ToString(actual) = "(1, A, True, Worksheet, Null, Empty)", 2)
+
+    actual = ArrayUtils.CStrArray("A", Array("B", Array("C", Array("D", emptyArr, "E"))))
+    Call PrintResult(LangUtils.ToString(actual) = "(A, B, C, D, E)", 3)
 
 End Sub
 
@@ -408,6 +611,57 @@ Private Sub TestFirst()
     arr = Array(obj, New MyClass, New MyClass)
 
     Call PrintResult(ArrayUtils.First(arr) Is obj, 3)
+
+End Sub
+
+Private Sub TestFlatten()
+    Dim emptyArr()      As Variant
+    Dim intArr(2)       As Integer
+    Dim strArr(2)       As String
+    Dim arr             As Variant
+    Dim obj             As Variant
+    Dim actual()        As Variant
+
+    Debug.Print "--- TestFlatten ---"
+
+    actual = ArrayUtils.Flatten(0)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 1)
+
+    actual = ArrayUtils.Flatten(0, emptyArr)
+    Call PrintResult(LangUtils.ToString(actual) = "()", 2)
+
+    actual = ArrayUtils.Flatten(0, 1)
+    Call PrintResult(LangUtils.ToString(actual) = "(1)", 3)
+
+    actual = ArrayUtils.Flatten(0, 1, 2, "A")
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, A)", 4)
+
+    actual = ArrayUtils.Flatten(0, Array("A", "B", "C"))
+    Call PrintResult(LangUtils.ToString(actual) = "(A, B, C)", 5)
+
+    intArr(0) = 1
+    intArr(1) = 2
+    intArr(2) = 3
+    strArr(0) = "A"
+    strArr(1) = "B"
+    strArr(2) = "C"
+    actual = ArrayUtils.Flatten(0, intArr, emptyArr, strArr, True)
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, A, B, C, True)", 6)
+
+    arr = Array(intArr, strArr)
+
+    actual = ArrayUtils.Flatten(1, Array(arr, "a", "b"))
+    Call PrintResult(LangUtils.ToString(actual) = "(((1, 2, 3), (A, B, C)), a, b)", 7)
+
+    actual = ArrayUtils.Flatten(2, Array(arr, "a", "b"))
+    Call PrintResult(LangUtils.ToString(actual) = "((1, 2, 3), (A, B, C), a, b)", 8)
+
+    actual = ArrayUtils.Flatten(3, Array(arr, "a", "b"))
+    Call PrintResult(LangUtils.ToString(actual) = "(1, 2, 3, A, B, C, a, b)", 9)
+
+    ' オブジェクト型でも確認
+    actual = ArrayUtils.Flatten(0, New MyClass, Array(New MyClass, Array(New MyClass)))
+    Call PrintResult(ArrayUtils.Length(actual) = 3, 10)
 
 End Sub
 
