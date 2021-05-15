@@ -49,14 +49,14 @@ End Sub
 ' FUNCTION : 指定された任意の数の要素をBoolean型の配列に変換して返します。
 '            CBool関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CBoolArray(ParamArray arr() As Variant) As Boolean()
+Public Function CBoolArray(ParamArray items() As Variant) As Boolean()
     Dim i           As Long
     Dim result()    As Boolean
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -73,14 +73,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をByte型の配列に変換して返します。
 '            CByte関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CByteArray(ParamArray arr() As Variant) As Byte()
+Public Function CByteArray(ParamArray items() As Variant) As Byte()
     Dim i           As Long
     Dim result()    As Byte
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -97,14 +97,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をCurrency型の配列に変換して返します。
 '            CCur関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CCurArray(ParamArray arr() As Variant) As Currency()
+Public Function CCurArray(ParamArray items() As Variant) As Currency()
     Dim i           As Long
     Dim result()    As Currency
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -121,14 +121,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をDate型の配列に変換して返します。
 '            CDate関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CDateArray(ParamArray arr() As Variant) As Date()
+Public Function CDateArray(ParamArray items() As Variant) As Date()
     Dim i           As Long
     Dim result()    As Date
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -145,14 +145,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をDouble型の配列に変換して返します。
 '            CDbl関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CDblArray(ParamArray arr() As Variant) As Double()
+Public Function CDblArray(ParamArray items() As Variant) As Double()
     Dim i           As Long
     Dim result()    As Double
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -169,14 +169,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をInteger型の配列に変換して返します。
 '            CInt関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CIntArray(ParamArray arr() As Variant) As Integer()
+Public Function CIntArray(ParamArray items() As Variant) As Integer()
     Dim i           As Long
     Dim result()    As Integer
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -193,14 +193,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をLong型の配列に変換して返します。
 '            CLng関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CLngArray(ParamArray arr() As Variant) As Long()
+Public Function CLngArray(ParamArray items() As Variant) As Long()
     Dim i           As Long
     Dim result()    As Long
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -217,14 +217,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をSingle型の配列に変換して返します。
 '            CSng関数でキャストできない要素が渡された場合はエラーを発出します。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CSngArray(ParamArray arr() As Variant) As Single()
+Public Function CSngArray(ParamArray items() As Variant) As Single()
     Dim i           As Long
     Dim result()    As Single
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -241,14 +241,14 @@ End Function
 ' FUNCTION : 指定された任意の数の要素をString型の配列に変換して返します。
 '            キャストはLangUtils.ToString関数により行われます。
 '
-' PARAMS   : arr - 任意の数の要素
+' PARAMS   : items - 任意の数の要素
 '------------------------------------------------------------------------------
-Public Function CStrArray(ParamArray arr() As Variant) As String()
+Public Function CStrArray(ParamArray items() As Variant) As String()
     Dim i           As Long
     Dim result()    As String
     Dim temp()      As Variant
 
-    temp = Flatten(0, arr)
+    temp = Flatten(0, items)
 
     If Not IsEmptyArray(temp) Then
         ReDim result(UBound(temp))
@@ -262,14 +262,17 @@ Public Function CStrArray(ParamArray arr() As Variant) As String()
 End Function
 
 '------------------------------------------------------------------------------
-' FUNCTION : 指定された動的配列に指定された配列を追加します。
+' FUNCTION : 指定された動的配列に指定された任意の数の要素を追加します。
 '
-' PARAMS   : arr      - 追加対象の配列
-'            otherArr - 追加する配列
+' PARAMS   : arr   - 追加対象の配列
+'            items - 追加する任意の数の要素
 '------------------------------------------------------------------------------
-Public Sub Concat(ByRef arr As Variant, ByRef otherArr As Variant)
-    Dim idx     As Long
-    Dim item    As Variant
+Public Sub Concat(ByRef arr As Variant, ParamArray items() As Variant)
+    Dim idx         As Long
+    Dim item        As Variant
+    Dim otherArr()  As Variant
+
+    otherArr = Flatten(2, items)
 
     If IsEmptyArray(otherArr) Then Exit Sub
 
@@ -307,17 +310,20 @@ Public Function Contains(ByRef arr As Variant, ByRef item As Variant) As Boolean
 End Function
 
 '------------------------------------------------------------------------------
-' FUNCTION : 指定した要素すべてが指定した配列に含まれるか判定します。
+' FUNCTION : 指定した任意の数の要素すべてが指定した配列に含まれるか判定します。
 '
 ' PARAMS   : arr   - 検索対象の配列
-'            items - 検索する要素の配列
+'            items - 検索する任意の数の要素
 '
 ' RETURN   : すべての要素が存在する場合は True
 '------------------------------------------------------------------------------
-Public Function ContainsAll(ByRef arr As Variant, ByRef items As Variant) As Boolean
-    Dim item    As Variant
+Public Function ContainsAll(ByRef arr As Variant, ParamArray items() As Variant) As Boolean
+    Dim item            As Variant
+    Dim flattenArr()    As Variant
 
-    If IsEmptyArray(items) Then
+    flattenArr = Flatten(2, items)
+
+    If IsEmptyArray(flattenArr) Then
         ContainsAll = True
         Exit Function
     End If
@@ -326,7 +332,7 @@ Public Function ContainsAll(ByRef arr As Variant, ByRef items As Variant) As Boo
 
     If IsEmptyArray(arr) Then Exit Function
 
-    For Each item In items
+    For Each item In flattenArr
         If IndexOf(arr, item) = -1 Then
             Exit Function
         End If
@@ -337,17 +343,20 @@ Public Function ContainsAll(ByRef arr As Variant, ByRef items As Variant) As Boo
 End Function
 
 '------------------------------------------------------------------------------
-' FUNCTION : 指定した要素のいずれかが指定した配列に含まれるか判定します。
+' FUNCTION : 指定した任意の数の要素のいずれかが指定した配列に含まれるか判定します。
 '
 ' PARAMS   : arr   - 検索対象の配列
-'            items - 検索する要素の配列
+'            items - 検索する任意の数の要素
 '
 ' RETURN   : いずれかの要素が存在する場合は True
 '------------------------------------------------------------------------------
-Public Function ContainsAny(ByRef arr As Variant, ByRef items As Variant) As Boolean
-    Dim item    As Variant
+Public Function ContainsAny(ByRef arr As Variant, ParamArray items() As Variant) As Boolean
+    Dim item            As Variant
+    Dim flattenArr()    As Variant
 
-    If IsEmptyArray(items) Then
+    flattenArr = Flatten(2, items)
+
+    If IsEmptyArray(flattenArr) Then
         ContainsAny = True
         Exit Function
     End If
@@ -359,7 +368,7 @@ Public Function ContainsAny(ByRef arr As Variant, ByRef items As Variant) As Boo
 
     ContainsAny = True
 
-    For Each item In items
+    For Each item In flattenArr
         If -1 < IndexOf(arr, item) Then
             Exit Function
         End If
@@ -466,15 +475,15 @@ End Function
 ' FUNCTION : 指定された任意の数の要素を一次元配列に平坦化して返します。
 '
 ' PARAMS   : level - 平坦化の再帰の深さ
-'            arr   - 任意の数の要素
+'            items - 任意の数の要素
 '
 ' RETURN   : 一次元配列
 '------------------------------------------------------------------------------
-Public Function Flatten(ByVal level As Integer, ParamArray arr() As Variant) As Variant()
+Public Function Flatten(ByVal level As Integer, ParamArray items() As Variant) As Variant()
     Dim result()    As Variant
     Dim item        As Variant
 
-    For Each item In arr
+    For Each item In items
         If IsArray(item) Then
             Call Flatten_(result, 1, level, item)
         Else
@@ -849,6 +858,78 @@ Public Function Length(ByRef arr As Variant) As Long
 End Function
 
 '------------------------------------------------------------------------------
+' FUNCTION : 指定された配列の中で最大の要素を取得します。
+'            すべての要素が不等号演算子による比較が可能であることが前提条件です。
+'
+' PARAMS   : arr - 取得対象の配列
+'
+' RETURN   : 最大の要素
+'------------------------------------------------------------------------------
+Public Function Max(ByRef arr As Variant) As Variant
+    Dim item        As Variant
+    Dim maxItem     As Variant
+
+    If IsObject(arr(0)) Then
+        Set maxItem = arr(0)
+    Else
+        maxItem = arr(0)
+    End If
+
+    For Each item In arr
+        If maxItem < item Then
+            If IsObject(item) Then
+                Set maxItem = item
+            Else
+                maxItem = item
+            End If
+        End If
+    Next
+
+    If IsObject(maxItem) Then
+        Set Max = maxItem
+    Else
+        Max = maxItem
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
+' FUNCTION : 指定された配列の中で最小の要素を取得します。
+'            すべての要素が不等号演算子による比較が可能であることが前提条件です。
+'
+' PARAMS   : arr - 取得対象の配列
+'
+' RETURN   : 最小の要素
+'------------------------------------------------------------------------------
+Public Function Min(ByRef arr As Variant) As Variant
+    Dim item        As Variant
+    Dim minItem     As Variant
+
+    If IsObject(arr(0)) Then
+        Set minItem = arr(0)
+    Else
+        minItem = arr(0)
+    End If
+
+    For Each item In arr
+        If item < minItem Then
+            If IsObject(item) Then
+                Set minItem = item
+            Else
+                minItem = item
+            End If
+        End If
+    Next
+
+    If IsObject(minItem) Then
+        Set Min = minItem
+    Else
+        Min = minItem
+    End If
+
+End Function
+
+'------------------------------------------------------------------------------
 ' FUNCTION : 指定された動的配列の最後の要素を削除します。
 '
 ' PARAMS   : arr - 削除対象の配列
@@ -928,15 +1009,22 @@ Public Sub Remove(ByRef arr As Variant, ByRef item As Variant, _
 End Sub
 
 '------------------------------------------------------------------------------
-' FUNCTION : 指定された配列から指定したすべての要素を削除します。
+' FUNCTION : 指定された配列から指定した任意の数の要素すべてを削除します。
 '
 ' PARAMS   : arr    - 削除対象の配列
-'            items  - 削除する要素の配列
+'            items  - 削除する任意の数の要素
 '------------------------------------------------------------------------------
-Public Sub RemoveAll(ByRef arr As Variant, ByRef items As Variant)
-    Dim item    As Variant
+Public Sub RemoveAll(ByRef arr As Variant, ParamArray items() As Variant)
+    Dim item            As Variant
+    Dim flattenArr()    As Variant
 
-    For Each item In items
+    flattenArr = Flatten(2, items)
+
+    If IsEmptyArray(flattenArr) Then
+        Exit Sub
+    End If
+
+    For Each item In flattenArr
         Call Remove(arr, item)
     Next
 
@@ -1135,7 +1223,7 @@ End Sub
 ' RETURN   : 選ばれた要素から成る新しい配列
 '------------------------------------------------------------------------------
 Public Function Sample(ByRef arr As Variant, Optional ByVal size As Long = 1, _
-                       Optional ByVal uniq As Boolean = True) As Variant
+                       Optional ByVal uniq As Boolean = True) As Variant()
     Dim i           As Long
     Dim idx         As Long
     Dim lIdx        As Long
@@ -1263,16 +1351,16 @@ End Sub
 '
 ' PARAMS   : arr        - 取得対象の配列
 '            [startIdx] - 取得する開始位置インデックス (省略すると先頭)
-'            [stopIdx]  - 取得する終了位置インデックス。ただし、stopIdxの位置は
+'            [endIdx]   - 取得する終了位置インデックス。ただし、endIdxの位置は
 '                         含まれない。 (省略すると末尾まで取得)
 '
 ' RETURN   : 取り出した要素から成る新しい配列
 '------------------------------------------------------------------------------
 Public Function Slice(ByRef arr As Variant, Optional ByVal startIdx As Long = 0, _
-                       Optional ByVal stopIdx As Long = 0) As Variant
+                       Optional ByVal endIdx As Long = 0) As Variant()
     Dim i           As Long
     Dim st          As Long
-    Dim sp          As Long
+    Dim en          As Long
     Dim indices()   As Long
 
     If startIdx < LBound(arr) Then
@@ -1281,19 +1369,19 @@ Public Function Slice(ByRef arr As Variant, Optional ByVal startIdx As Long = 0,
         st = startIdx
     End If
 
-    If stopIdx <= 0 Or UBound(arr) < stopIdx Then
-        sp = UBound(arr) + 1
+    If endIdx <= 0 Or UBound(arr) < endIdx Then
+        en = UBound(arr) + 1
     Else
-        sp = stopIdx
+        en = endIdx
     End If
 
-    If sp <= st Then
+    If en <= st Then
         Slice = ValuesAt(arr)
         Exit Function
     End If
 
-    ReDim indices(st To sp - 1)
-    For i = st To sp - 1
+    ReDim indices(st To en - 1)
+    For i = st To en - 1
         indices(i) = i
     Next
 
@@ -1504,7 +1592,7 @@ End Sub
 '
 ' RETURN   : 取り出した要素から成る配列
 '------------------------------------------------------------------------------
-Public Function ValuesAt(ByRef arr As Variant, ParamArray indices() As Variant) As Variant
+Public Function ValuesAt(ByRef arr As Variant, ParamArray indices() As Variant) As Variant()
     Dim i                   As Long
     Dim result()            As Variant
     Dim flattenIndices()    As Long
