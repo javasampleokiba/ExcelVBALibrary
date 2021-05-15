@@ -1,6 +1,9 @@
 Attribute VB_Name = "TestSuite"
 Option Explicit
 
+' OKの場合も結果出力するかのフラグ
+Private printOK     As Boolean
+
 '------------------------------------------------------------------------------
 '
 ' MODULE : 全モジュールのテストを実行するモジュール
@@ -20,6 +23,8 @@ Sub TestAll()
     Dim val10           As String * 20
     Dim val11(1)        As String
     Dim arr(1 To 18)    As Variant
+
+    printOK = False
 
     ' 全データ型を格納したテスト用配列を作成
     val1 = 10
@@ -62,16 +67,19 @@ Sub TestAll()
 
     ' [クラスモジュール]
     Call TestBusinessDayCalculator.TestAll
+    Call TestList.TestAll(arr)
     
 End Sub
 
 Public Sub PrintResult(ByVal result As Boolean, Optional ByVal num As Variant = 0)
 
     If result Then
-        If num = 0 Then
-            Debug.Print "OK!"
-        Else
-            Debug.Print "No." & num & " OK!"
+        If printOK Then
+            If num = 0 Then
+                Debug.Print "OK!"
+            Else
+                Debug.Print "No." & num & " OK!"
+            End If
         End If
     Else
         If num = 0 Then
