@@ -38,6 +38,8 @@ Public Sub TestAll(ByVal arr As Variant)
     Call TestLastIndexOf
     Call TestLastIndicesOf
     Call TestLength(arr)
+    Call TestMax
+    Call TestMin
     Call TestPop
     Call TestPush
     Call TestRemove
@@ -335,15 +337,21 @@ Private Sub TestConcat()
     Call ArrayUtils.Concat(arr1, arr2)
     Call PrintResult(LangUtils.ToString(arr1) = "(A, B, C, 1, 2, 3)", 4)
 
+    ' 可変長引数の確認
+    Call ArrayUtils.Concat(arr1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(A, B, C, 1, 2, 3)", 5)
+    Call ArrayUtils.Concat(arr1, "D", "E", Array("F"))
+    Call PrintResult(LangUtils.ToString(arr1) = "(A, B, C, 1, 2, 3, D, E, F)", 6)
+
     ' 暗黙の型変換不可なら型不一致エラー
     On Error Resume Next
     Call ArrayUtils.Concat(arr2, arr1)
-    Call PrintResult(Err.Number = 13, 5)
+    Call PrintResult(Err.Number = 13, 7)
     On Error GoTo 0
 
     ' オブジェクト型でも確認
     Call ArrayUtils.Concat(arr3, arr4)
-    Call PrintResult(Length(arr3) = 4, 6)
+    Call PrintResult(Length(arr3) = 4, 8)
 
 End Sub
 
@@ -404,29 +412,29 @@ Private Sub TestContainsAll()
     Call PrintResult(Err.Number = 5, 1)
     On Error GoTo 0
 
-    On Error Resume Next
-    Call ArrayUtils.ContainsAll(items1, "ABC")
-    Call PrintResult(Err.Number = 5, 2)
-    On Error GoTo 0
-
     ' 空配列の場合
-    Call PrintResult(Not ArrayUtils.ContainsAll(emptyArr, items1), 3)
-    Call PrintResult(ArrayUtils.ContainsAll(arr, emptyArr), 4)
+    Call PrintResult(Not ArrayUtils.ContainsAll(emptyArr, items1), 2)
+    Call PrintResult(ArrayUtils.ContainsAll(arr, emptyArr), 3)
 
     ' 要素が1つも見つからない場合
-    Call PrintResult(Not ArrayUtils.ContainsAll(arr, items1), 5)
-    Call PrintResult(Not ArrayUtils.ContainsAll(arr, items2), 6)
+    Call PrintResult(Not ArrayUtils.ContainsAll(arr, items1), 4)
+    Call PrintResult(Not ArrayUtils.ContainsAll(arr, items2), 5)
 
     ' 一部の要素が見つかる場合
     items2(0) = 1
     items2(1) = "A"
-    Call PrintResult(Not ArrayUtils.ContainsAll(arr, items2), 7)
+    Call PrintResult(Not ArrayUtils.ContainsAll(arr, items2), 6)
 
     ' すべての要素が見つかる場合
     items1(0) = 1
     items2(2) = "C"
-    Call PrintResult(ArrayUtils.ContainsAll(arr, items1), 8)
-    Call PrintResult(ArrayUtils.ContainsAll(arr, items2), 9)
+    Call PrintResult(ArrayUtils.ContainsAll(arr, items1), 7)
+    Call PrintResult(ArrayUtils.ContainsAll(arr, items2), 8)
+
+    ' 可変長引数の確認
+    Call PrintResult(ArrayUtils.ContainsAll(arr), 9)
+    Call PrintResult(ArrayUtils.ContainsAll(arr, 1, 2, 3), 10)
+    Call PrintResult(Not ArrayUtils.ContainsAll(arr, 1, 2, Array(4)), 11)
 
 End Sub
 
@@ -455,29 +463,30 @@ Private Sub TestContainsAny()
     Call PrintResult(Err.Number = 5, 1)
     On Error GoTo 0
 
-    On Error Resume Next
-    Call ArrayUtils.ContainsAny(items1, "ABC")
-    Call PrintResult(Err.Number = 5, 2)
-    On Error GoTo 0
-
     ' 空配列の場合
-    Call PrintResult(Not ArrayUtils.ContainsAny(emptyArr, items1), 3)
-    Call PrintResult(ArrayUtils.ContainsAny(arr, emptyArr), 4)
+    Call PrintResult(Not ArrayUtils.ContainsAny(emptyArr, items1), 2)
+    Call PrintResult(ArrayUtils.ContainsAny(arr, emptyArr), 3)
 
     ' 要素が1つも見つからない場合
-    Call PrintResult(Not ArrayUtils.ContainsAny(arr, items1), 5)
-    Call PrintResult(Not ArrayUtils.ContainsAny(arr, items2), 6)
+    Call PrintResult(Not ArrayUtils.ContainsAny(arr, items1), 4)
+    Call PrintResult(Not ArrayUtils.ContainsAny(arr, items2), 5)
 
     ' 一部の要素が見つかる場合
     items2(1) = "A"
-    Call PrintResult(ArrayUtils.ContainsAny(arr, items2), 7)
+    Call PrintResult(ArrayUtils.ContainsAny(arr, items2), 6)
 
     ' すべての要素が見つかる場合
     items1(0) = 1
     items2(0) = 1
     items2(2) = "C"
-    Call PrintResult(ArrayUtils.ContainsAny(arr, items1), 8)
-    Call PrintResult(ArrayUtils.ContainsAny(arr, items2), 9)
+    Call PrintResult(ArrayUtils.ContainsAny(arr, items1), 7)
+    Call PrintResult(ArrayUtils.ContainsAny(arr, items2), 8)
+
+    ' 可変長引数の確認
+    Call PrintResult(ArrayUtils.ContainsAny(arr), 9)
+    Call PrintResult(ArrayUtils.ContainsAny(arr, 1, 2, 3), 10)
+    Call PrintResult(ArrayUtils.ContainsAny(arr, 3, 4, Array(5)), 11)
+    Call PrintResult(Not ArrayUtils.ContainsAny(arr, Array(4), Array(5, 6)), 12)
 
 End Sub
 
@@ -1009,6 +1018,58 @@ Private Sub TestLength(ByVal arr As Variant)
 
 End Sub
 
+Private Sub TestMax()
+    Dim emptyArr()      As Variant
+
+    Debug.Print "--- TestMax ---"
+
+    ' 配列以外の場合
+    On Error Resume Next
+    Call ArrayUtils.Max("ABC")
+    Call PrintResult(Err.Number <> 0, 1)
+    On Error GoTo 0
+
+    ' 空配列の場合
+    On Error Resume Next
+    Call ArrayUtils.Max(emptyArr)
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    ' 要素一つ
+    Call PrintResult(ArrayUtils.Max(Array(1)) = 1, 3)
+
+    ' 複数要素
+    Call PrintResult(ArrayUtils.Max(Array(1, 2, 3, 2, 3, 3)) = 3, 4)
+    Call PrintResult(ArrayUtils.Max(Array("A", "B", "C")) = "C", 5)
+
+End Sub
+
+Private Sub TestMin()
+    Dim emptyArr()      As Variant
+
+    Debug.Print "--- TestMin ---"
+
+    ' 配列以外の場合
+    On Error Resume Next
+    Call ArrayUtils.Min("ABC")
+    Call PrintResult(Err.Number <> 0, 1)
+    On Error GoTo 0
+
+    ' 空配列の場合
+    On Error Resume Next
+    Call ArrayUtils.Min(emptyArr)
+    Call PrintResult(Err.Number <> 0, 2)
+    On Error GoTo 0
+
+    ' 要素一つ
+    Call PrintResult(ArrayUtils.Min(Array(1)) = 1, 3)
+
+    ' 複数要素
+    Call PrintResult(ArrayUtils.Min(Array(1, 2, 3, 2, 3, 3)) = 1, 4)
+    Call PrintResult(ArrayUtils.Min(Array("A", "B", "C")) = "A", 5)
+
+End Sub
+
 Private Sub TestPop()
     Dim emptyArr()      As Variant
     Dim arr()           As Variant
@@ -1142,13 +1203,20 @@ Private Sub TestRemoveAll()
     Call ArrayUtils.RemoveAll(arr1, arr2)
     Call PrintResult(LangUtils.ToString(arr1) = "(1, 2, 2)", 5)
 
+    ' 可変長引数の確認
+    arr1 = Array(1, 2, 3, 2, 3, 3)
+    Call ArrayUtils.RemoveAll(arr1)
+    Call PrintResult(LangUtils.ToString(arr1) = "(1, 2, 3, 2, 3, 3)", 6)
+    Call ArrayUtils.RemoveAll(arr1, 1, Array(3))
+    Call PrintResult(LangUtils.ToString(arr1) = "(2, 2)", 7)
+
     ' オブジェクト型でも確認
     Set obj = New MyClass
     arr1 = Array(obj, obj, obj, obj)
     arr2 = Array(obj)
 
     Call ArrayUtils.RemoveAll(arr1, arr2)
-    Call PrintResult(IsEmptyArray(arr1), 6)
+    Call PrintResult(IsEmptyArray(arr1), 8)
 
 End Sub
 
