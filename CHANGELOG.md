@@ -21,3 +21,16 @@ Count, Fill, Join, Replace, ReplaceLast, Reverse, Rotate, Sample, Shuffle, Slice
 ## 2021/04/11
 ArrayUtilsモジュールに以下の関数を追加。<br>
 CBoolArray、CByteArray、CCurArray、CDateArray、CDblArray、CIntArray、CLngArray、CSngArray、CStrArray、Flatten
+
+## 2021/05/15
+
+[ArrayUtilsモジュール]
+
+- Max、Min関数を追加。
+- Concat、ContainsAll、ContainsAny、RemoveAll関数を可変長引数に対応
+- Sample、Slice、ValuesAt関数の戻り値をVariant -> Variant()に変更。
+- 一部の関数の引数名見直し。
+
+[Listクラスモジュール]
+
+モジュール追加。
