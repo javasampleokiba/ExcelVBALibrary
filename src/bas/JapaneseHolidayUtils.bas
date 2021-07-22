@@ -3,27 +3,27 @@ Option Explicit
 
 '------------------------------------------------------------------------------
 '
-' MODULE   : ���{�́u�����̏j���v�A�u�U�֋x���v�A�u�����̋x���v�Ɋւ��郆�[�e�B���e�B�N���X
+' MODULE   : 日本の「国民の祝日」、「振替休日」、「国民の休日」に関するユーティリティクラス
 '
-'            [���ӎ���]
-'            �E����̖@�������ɂ�萳��ɓ��삵�Ȃ��Ȃ�\��������܂��B
-'            �E2151�N�ȍ~�́u�t���̓��v�A�u�H���̓��v�͋��߂邱�Ƃ��ł��܂���B
-'            �E�����́u�����̏j���v���d�Ȃ�ꍇ�́A�����ꂩ����̏�񂵂��擾�ł��܂���B
-'              �i����ŏ��ɏj�����d������̂�2876�N�Ɨ\������Ă��܂��j
+'            [注意事項]
+'            ・今後の法律改正により正常に動作しなくなる可能性があります。
+'            ・2151年以降の「春分の日」、「秋分の日」は求めることができません。
+'            ・複数の「国民の祝日」が重なる場合は、いずれか一方の情報しか取得できません。
+'              （今後最初に祝日が重複するのは2876年と予測されています）
 '
 '------------------------------------------------------------------------------
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肵�����t�́u�����̏j���v�̖��O���擾���܂��B
-'            �u�U�֋x���v�u�����̋x���v�̏ꍇ�͂��ꂼ��"�U�֋x��"�A"�����̋x��"��Ԃ��܂��B
-'            �u�����̏j���v�u�U�֋x���v�u�����̋x���v�̂�����ł��Ȃ��ꍇ�͋󕶎���Ԃ��܂��B
+' FUNCTION : 指定した日付の「国民の祝日」の名前を取得します。
+'            「振替休日」「国民の休日」の場合はそれぞれ"振替休日"、"国民の休日"を返します。
+'            「国民の祝日」「振替休日」「国民の休日」のいずれでもない場合は空文字を返します。
 '
-' PARAMS   : d - ���t
+' PARAMS   : d - 日付
 '
-' RETURN   : �w�肵�����t�́u�����̏j���v�̖��O�A�܂���"�U�֋x��"�A"�����̋x��"
+' RETURN   : 指定した日付の「国民の祝日」の名前、または"振替休日"、"国民の休日"
 '
-' ERROR    : �u�t���̓��v�u�H���̓��v���v�Z���ł��Ȃ��N���w�肳�ꂽ�ꍇ
+' ERROR    : 「春分の日」「秋分の日」が計算ができない年を指定された場合
 '
 '------------------------------------------------------------------------------
 Public Function GetHolidayName(ByRef d As Date) As String
@@ -37,7 +37,7 @@ Public Function GetHolidayName(ByRef d As Date) As String
         Exit Function
     End If
 
-    ' ���j�̏ꍇ�́A�U�֋x���A�����̋x���ɂ͂Ȃ�Ȃ�
+    ' 日曜の場合は、振替休日、国民の休日にはならない
     If Weekday(d) = vbSunday Then Exit Function
 
     name = GetSubstituteHoliday(d)
@@ -52,14 +52,14 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肵�����t�́u�����̏j���v�̖��O���擾���܂��B
-'            �u�����̏j���v�ł͂Ȃ��ꍇ�͋󕶎���Ԃ��܂��B
+' FUNCTION : 指定した日付の「国民の祝日」の名前を取得します。
+'            「国民の祝日」ではない場合は空文字を返します。
 '
-' PARAMS   : d - ���t
+' PARAMS   : d - 日付
 '
-' RETURN   : �w�肵�����t�́u�����̏j���v�̖��O
+' RETURN   : 指定した日付の「国民の祝日」の名前
 '
-' ERROR    : �u�t���̓��v�u�H���̓��v���v�Z���ł��Ȃ��N���w�肳�ꂽ�ꍇ
+' ERROR    : 「春分の日」「秋分の日」が計算ができない年を指定された場合
 '
 '------------------------------------------------------------------------------
 Public Function GetNationalHolidayName(ByRef d As Date) As String
@@ -76,18 +76,18 @@ Public Function GetNationalHolidayName(ByRef d As Date) As String
     Select Case month(d)
         Case 1
             If dy = 1 Then
-                GetNationalHolidayName = "����"
+                GetNationalHolidayName = "元日"
                 Exit Function
             End If
 
             If y <= 1999 Then
                 If dy = 15 Then
-                    GetNationalHolidayName = "���l�̓�"
+                    GetNationalHolidayName = "成人の日"
                     Exit Function
                 End If
             ElseIf 2000 <= y Then
                 If dy = MondayOf(y, 1, 2) Then
-                    GetNationalHolidayName = "���l�̓�"
+                    GetNationalHolidayName = "成人の日"
                     Exit Function
                 End If
             End If
@@ -95,32 +95,32 @@ Public Function GetNationalHolidayName(ByRef d As Date) As String
         Case 2
             If 1967 <= y Then
                 If dy = 11 Then
-                    GetNationalHolidayName = "�����L�O�̓�"
+                    GetNationalHolidayName = "建国記念の日"
                     Exit Function
                 End If
             End If
 
             If 2020 <= y Then
                 If dy = 23 Then
-                    GetNationalHolidayName = "�V�c�a����"
+                    GetNationalHolidayName = "天皇誕生日"
                     Exit Function
                 End If
             End If
 
         Case 3
             If dy = CalcVernalEquinoxDay(y) Then
-                GetNationalHolidayName = "�t���̓�"
+                GetNationalHolidayName = "春分の日"
                 Exit Function
             End If
 
         Case 4
             If dy = 29 Then
                 If y <= 1988 Then
-                    GetNationalHolidayName = "�V�c�a����"
+                    GetNationalHolidayName = "天皇誕生日"
                 ElseIf 1989 <= y And y <= 2006 Then
-                    GetNationalHolidayName = "�݂ǂ�̓�"
+                    GetNationalHolidayName = "みどりの日"
                 ElseIf 2007 <= y Then
-                    GetNationalHolidayName = "���a�̓�"
+                    GetNationalHolidayName = "昭和の日"
                 End If
                 Exit Function
             End If
@@ -128,18 +128,18 @@ Public Function GetNationalHolidayName(ByRef d As Date) As String
         Case 5
             If 2007 <= y Then
                 If dy = 4 Then
-                    GetNationalHolidayName = "�݂ǂ�̓�"
+                    GetNationalHolidayName = "みどりの日"
                     Exit Function
                 End If
             End If
 
             If dy = 3 Then
-                GetNationalHolidayName = "���@�L�O��"
+                GetNationalHolidayName = "憲法記念日"
                 Exit Function
             End If
 
             If dy = 5 Then
-                GetNationalHolidayName = "���ǂ��̓�"
+                GetNationalHolidayName = "こどもの日"
                 Exit Function
             End If
 
@@ -148,24 +148,34 @@ Public Function GetNationalHolidayName(ByRef d As Date) As String
         Case 7
             If 1996 <= y And y <= 2002 Then
                 If dy = 20 Then
-                    GetNationalHolidayName = "�C�̓�"
+                    GetNationalHolidayName = "海の日"
                     Exit Function
                 End If
             ElseIf y = 2020 Then
                 If dy = 23 Then
-                    GetNationalHolidayName = "�C�̓�"
+                    GetNationalHolidayName = "海の日"
+                    Exit Function
+                End If
+            ElseIf y = 2021 Then
+                If dy = 22 Then
+                    GetNationalHolidayName = "海の日"
                     Exit Function
                 End If
             ElseIf 2003 <= y Then
                 If dy = MondayOf(y, 7, 3) Then
-                    GetNationalHolidayName = "�C�̓�"
+                    GetNationalHolidayName = "海の日"
                     Exit Function
                 End If
             End If
 
             If y = 2020 Then
                 If dy = 24 Then
-                    GetNationalHolidayName = "�X�|�[�c�̓�"
+                    GetNationalHolidayName = "スポーツの日"
+                    Exit Function
+                End If
+            ElseIf y = 2021 Then
+                If dy = 23 Then
+                    GetNationalHolidayName = "スポーツの日"
                     Exit Function
                 End If
             End If
@@ -173,12 +183,17 @@ Public Function GetNationalHolidayName(ByRef d As Date) As String
         Case 8
             If y = 2020 Then
                 If dy = 10 Then
-                    GetNationalHolidayName = "�R�̓�"
+                    GetNationalHolidayName = "山の日"
+                    Exit Function
+                End If
+            ElseIf y = 2021 Then
+                If dy = 8 Then
+                    GetNationalHolidayName = "山の日"
                     Exit Function
                 End If
             ElseIf 2016 <= y Then
                 If dy = 11 Then
-                    GetNationalHolidayName = "�R�̓�"
+                    GetNationalHolidayName = "山の日"
                     Exit Function
                 End If
             End If
@@ -186,54 +201,54 @@ Public Function GetNationalHolidayName(ByRef d As Date) As String
         Case 9
             If 1966 <= y And y <= 2002 Then
                 If dy = 15 Then
-                    GetNationalHolidayName = "�h�V�̓�"
+                    GetNationalHolidayName = "敬老の日"
                     Exit Function
                 End If
             ElseIf 2003 <= y Then
                 If dy = MondayOf(y, 9, 3) Then
-                    GetNationalHolidayName = "�h�V�̓�"
+                    GetNationalHolidayName = "敬老の日"
                     Exit Function
                 End If
             End If
 
             If dy = CalcAutumnalEquinoxDay(y) Then
-                GetNationalHolidayName = "�H���̓�"
+                GetNationalHolidayName = "秋分の日"
                 Exit Function
             End If
 
         Case 10
             If 1966 <= y And y <= 1999 Then
                 If dy = 10 Then
-                    GetNationalHolidayName = "�̈�̓�"
+                    GetNationalHolidayName = "体育の日"
                     Exit Function
                 End If
             ElseIf 2000 <= y And y <= 2019 Then
                 If dy = MondayOf(y, 10, 2) Then
-                    GetNationalHolidayName = "�̈�̓�"
+                    GetNationalHolidayName = "体育の日"
                     Exit Function
                 End If
             ElseIf 2021 <= y Then
                 If dy = MondayOf(y, 10, 2) Then
-                    GetNationalHolidayName = "�X�|�[�c�̓�"
+                    GetNationalHolidayName = "スポーツの日"
                     Exit Function
                 End If
             End If
 
         Case 11
             If dy = 3 Then
-                GetNationalHolidayName = "�����̓�"
+                GetNationalHolidayName = "文化の日"
                 Exit Function
             End If
 
             If dy = 23 Then
-                GetNationalHolidayName = "�ΘJ���ӂ̓�"
+                GetNationalHolidayName = "勤労感謝の日"
                 Exit Function
             End If
 
         Case 12
             If 1989 <= y And y <= 2018 Then
                 If dy = 23 Then
-                    GetNationalHolidayName = "�V�c�a����"
+                    GetNationalHolidayName = "天皇誕生日"
                     Exit Function
                 End If
             End If
@@ -243,13 +258,13 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肵�����t���u�����̏j���v�u�U�֋x���v�u�����̋x���v�̂����ꂩ�ł��邩���肵�܂��B
+' FUNCTION : 指定した日付が「国民の祝日」「振替休日」「国民の休日」のいずれかであるか判定します。
 '
-' PARAMS   : d - ���t
+' PARAMS   : d - 日付
 '
-' RETURN   : �w�肵�����t���u�����̏j���v�u�U�֋x���v�u�����̋x���v�̂����ꂩ�ł���ꍇ�� true
+' RETURN   : 指定した日付が「国民の祝日」「振替休日」「国民の休日」のいずれかである場合は true
 '
-' ERROR    : �u�t���̓��v�u�H���̓��v���v�Z���ł��Ȃ��N���w�肳�ꂽ�ꍇ
+' ERROR    : 「春分の日」「秋分の日」が計算ができない年を指定された場合
 '
 '------------------------------------------------------------------------------
 Public Function IsHoliday(ByRef d As Date) As Boolean
@@ -264,13 +279,13 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肵�����t���u�����̏j���v�ł��邩���肵�܂��B
+' FUNCTION : 指定した日付が「国民の祝日」であるか判定します。
 '
-' PARAMS   : d - ���t
+' PARAMS   : d - 日付
 '
-' RETURN   : �w�肵�����t���u�����̏j���v�ł���ꍇ�� true
+' RETURN   : 指定した日付が「国民の祝日」である場合は true
 '
-' ERROR    : �u�t���̓��v�u�H���̓��v���v�Z���ł��Ȃ��N���w�肳�ꂽ�ꍇ
+' ERROR    : 「春分の日」「秋分の日」が計算ができない年を指定された場合
 '
 '------------------------------------------------------------------------------
 Public Function IsNationalHoliday(ByRef d As Date) As Boolean
@@ -285,16 +300,16 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肵�����t���u�U�֋x���v�ł��邩���肵�܂��B
+' FUNCTION : 指定した日付が「振替休日」であるか判定します。
 '
-' PARAMS   : d - ���t
+' PARAMS   : d - 日付
 '
-' RETURN   : �w�肵�����t���u�U�֋x���v�ł���ꍇ�� true
+' RETURN   : 指定した日付が「振替休日」である場合は true
 '
 '------------------------------------------------------------------------------
 Public Function IsSubstituteHoliday(ByRef d As Date) As Boolean
 
-    If GetHolidayName(d) = "�U�֋x��" Then
+    If GetHolidayName(d) = "振替休日" Then
         IsSubstituteHoliday = True
     Else
         IsSubstituteHoliday = False
@@ -304,16 +319,16 @@ End Function
 
 '------------------------------------------------------------------------------
 '
-' FUNCTION : �w�肵�����t���u�����̋x���v�ł��邩���肵�܂��B
+' FUNCTION : 指定した日付が「国民の休日」であるか判定します。
 '
-' PARAMS   : d - ���t
+' PARAMS   : d - 日付
 '
-' RETURN   : �w�肵�����t���u�����̋x���v�ł���ꍇ�� true
+' RETURN   : 指定した日付が「国民の休日」である場合は true
 '
 '------------------------------------------------------------------------------
 Public Function IsCitizensHoliday(ByRef d As Date) As Boolean
 
-    If GetHolidayName(d) = "�����̋x��" Then
+    If GetHolidayName(d) = "国民の休日" Then
         IsCitizensHoliday = True
     Else
         IsCitizensHoliday = False
@@ -378,21 +393,21 @@ Private Function GetSubstituteHoliday(ByRef d As Date) As String
 
     GetSubstituteHoliday = ""
 
-    ' �@�������O�́A�U�֋x���ɂ͂Ȃ�Ȃ�
+    ' 法律改正前は、振替休日にはならない
     If DateDiff("d", "1973/4/12", d) < 0 Then Exit Function
 
     tmpD = DateAdd("d", -1, d)
     If DateDiff("d", "2007/1/1", d) < 0 Then
-        ' �j�������j���̏ꍇ�͂��̗����̌��j����U�֋x���Ƃ���
+        ' 祝日が日曜日の場合はその翌日の月曜日を振替休日とする
         If IsNationalHoliday(tmpD) And Weekday(tmpD) = vbSunday Then
-            GetSubstituteHoliday = "�U�֋x��"
+            GetSubstituteHoliday = "振替休日"
         End If
     Else
-        ' �A������j���̂����A�ǂꂩ1�������j���Əd�Ȃ����ꍇ�́A�Ō�̏j���̗������U�֋x���Ƃ���
+        ' 連続する祝日のうち、どれか1日が日曜日と重なった場合は、最後の祝日の翌日が振替休日とする
         Do While True
             If IsNationalHoliday(tmpD) Then
                 If Weekday(tmpD) = vbSunday Then
-                    GetSubstituteHoliday = "�U�֋x��"
+                    GetSubstituteHoliday = "振替休日"
                 End If
             Else
                 Exit Do
@@ -407,12 +422,12 @@ Private Function GetCitizensHoliday(ByRef d As Date) As String
 
     GetCitizensHoliday = ""
 
-    ' �@�������O�́A�����̋x���ɂ͂Ȃ�Ȃ�
+    ' 法律改正前は、国民の休日にはならない
     If DateDiff("d", "1985/12/27", d) < 0 Then Exit Function
 
     If IsNationalHoliday(DateAdd("d", -1, d)) And _
         IsNationalHoliday(DateAdd("d", 1, d)) Then
-        GetCitizensHoliday = "�����̋x��"
+        GetCitizensHoliday = "国民の休日"
     End If
 
 End Function
