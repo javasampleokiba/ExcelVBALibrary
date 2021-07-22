@@ -3,7 +3,7 @@ Option Explicit
 
 '------------------------------------------------------------------------------
 '
-' MODULE : JapaneseHolidayUtils‚ÌƒeƒXƒgƒ‚ƒWƒ…[ƒ‹
+' MODULE : JapaneseHolidayUtilsã®ãƒ†ã‚¹ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 '
 '------------------------------------------------------------------------------
 
@@ -23,92 +23,92 @@ Private Sub TestGetNationalHolidayName()
 
     Debug.Print "--- TestGetNationalHolidayName ---"
 
-    Debug.Print "[Œ³’U]"
-    ' “K—pŠJn‘O
+    Debug.Print "[å…ƒæ—¦]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/1/1948") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 1949 To MAX_YEAR
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/1/" & y) = "Œ³“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/1/" & y) = "å…ƒæ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/2/" & y) = "")
     Next
 
-    Debug.Print "[¬l‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[æˆäººã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/15/1948") = "")
-    ' “K—pŠJnŒã`—j“úŒÅ’è‘O
+    ' é©ç”¨é–‹å§‹å¾Œï½æ›œæ—¥å›ºå®šå‰
     For y = 1949 To 1999
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/14/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/15/" & y) = "¬l‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/15/" & y) = "æˆäººã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/16/" & y) = "")
     Next
-    ' —j“úŒÅ’èŒã
+    ' æ›œæ—¥å›ºå®šå¾Œ
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/9/2000") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/10/2000") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/10/2000") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/11/2000") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/7/2001") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/8/2001") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/8/2001") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/9/2001") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/13/2002") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/14/2002") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/14/2002") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/15/2002") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/12/2003") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/13/2003") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/13/2003") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/14/2003") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/12/2098") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/13/2098") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/13/2098") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/14/2098") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/11/2099") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/12/2099") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/12/2099") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/13/2099") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/10/2100") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/11/2100") = "¬l‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/11/2100") = "æˆäººã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("1/12/2100") = "")
 
-    Debug.Print "[Œš‘‹L”O‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[å»ºå›½è¨˜å¿µã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/11/1966") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 1967 To MAX_YEAR
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/10/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/11/" & y) = "Œš‘‹L”O‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/11/" & y) = "å»ºå›½è¨˜å¿µã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/12/" & y) = "")
     Next
 
-    Debug.Print "[“Vc’a¶“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[å¤©çš‡èª•ç”Ÿæ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/1948") = "")
-    ' “K—pŠJnŒã`“ú•t•ÏX(1‰ñ–Ú)‘O
+    ' é©ç”¨é–‹å§‹å¾Œï½æ—¥ä»˜å¤‰æ›´(1å›ç›®)å‰
     For y = 1949 To 1988
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/28/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/" & y) = "“Vc’a¶“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/" & y) = "å¤©çš‡èª•ç”Ÿæ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/30/" & y) = "")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/23/" & y) = "")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/23/" & y) = "")
     Next
-    ' “ú•t•ÏX(1‰ñ–Ú)Œã`“ú•t•ÏX(2‰ñ–Ú)‘O
+    ' æ—¥ä»˜å¤‰æ›´(1å›ç›®)å¾Œï½æ—¥ä»˜å¤‰æ›´(2å›ç›®)å‰
     For y = 1989 To 2018
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/22/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/23/" & y) = "“Vc’a¶“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/23/" & y) = "å¤©çš‡èª•ç”Ÿæ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/24/" & y) = "")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/23/" & y) = "")
     Next
-    ' 2019”N‚Í•½“ú
+    ' 2019å¹´ã¯å¹³æ—¥
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/23/2019") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/23/2019") = "")
-    ' “ú•t•ÏX(2‰ñ–Ú)Œã
+    ' æ—¥ä»˜å¤‰æ›´(2å›ç›®)å¾Œ
     For y = 2020 To MAX_YEAR
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/22/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/23/" & y) = "“Vc’a¶“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/23/" & y) = "å¤©çš‡èª•ç”Ÿæ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("2/24/" & y) = "")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("12/23/" & y) = "")
     Next
 
-    Debug.Print "[t•ª‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[æ˜¥åˆ†ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/20/1948") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/21/1948") = "")
-    ' “K—pŠJnŒã
-    name = "t•ª‚Ì“ú"
+    ' é©ç”¨é–‹å§‹å¾Œ
+    name = "æ˜¥åˆ†ã®æ—¥"
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/21/1949") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/21/1950") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/21/1951") = name)
@@ -221,148 +221,156 @@ Private Sub TestGetNationalHolidayName()
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/20/2148") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/20/2149") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("3/21/2150") = name)
-    ' 2151”NˆÈ~‚ÍŒvZ‚Å‚«‚È‚¢
+    ' 2151å¹´ä»¥é™ã¯è¨ˆç®—ã§ããªã„
     On Error Resume Next
     JapaneseHolidayUtils.GetNationalHolidayName ("3/21/2151")
-    Call PrintResultIfNg(Err.number = 5)
+    Call PrintResultIfNg(Err.Number = 5)
     On Error GoTo 0
 
-    Debug.Print "[‚İ‚Ç‚è‚Ì“ú]"
-    ' “K—pŠJnŒã`“ú•t•ÏX‘O
+    Debug.Print "[ã¿ã©ã‚Šã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å¾Œï½æ—¥ä»˜å¤‰æ›´å‰
     For y = 1989 To 2006
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/28/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/" & y) = "‚İ‚Ç‚è‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/" & y) = "ã¿ã©ã‚Šã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/30/" & y) = "")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/4/" & y) = "")
     Next
-    ' “ú•t•ÏXŒã
+    ' æ—¥ä»˜å¤‰æ›´å¾Œ
     For y = 2007 To MAX_YEAR
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/4/" & y) = "‚İ‚Ç‚è‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/4/" & y) = "ã¿ã©ã‚Šã®æ—¥")
     Next
 
-    Debug.Print "[º˜a‚Ì“ú]"
-    ' “K—pŠJnŒã
+    Debug.Print "[æ˜­å’Œã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 2007 To MAX_YEAR
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/28/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/" & y) = "º˜a‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/29/" & y) = "æ˜­å’Œã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("4/30/" & y) = "")
     Next
 
-    Debug.Print "[Œ›–@‹L”O“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[æ†²æ³•è¨˜å¿µæ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/3/1948") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 1949 To MAX_YEAR
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/2/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/3/" & y) = "Œ›–@‹L”O“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/3/" & y) = "æ†²æ³•è¨˜å¿µæ—¥")
     Next
 
-    Debug.Print "[‚±‚Ç‚à‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[ã“ã©ã‚‚ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/5/1948") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 1949 To MAX_YEAR
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/5/" & y) = "‚±‚Ç‚à‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/5/" & y) = "ã“ã©ã‚‚ã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("5/6/" & y) = "")
     Next
 
-    Debug.Print "[ŠC‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[æµ·ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/1995") = "")
-    ' “K—pŠJnŒã`—j“úŒÅ’è‘O
+    ' é©ç”¨é–‹å§‹å¾Œï½æ›œæ—¥å›ºå®šå‰
     For y = 1996 To 2002
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/" & y) = "ŠC‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/" & y) = "æµ·ã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/" & y) = "")
     Next
-    ' 2020”N‚Ì‚İ“Œ‹ŒÜ—ÖEƒpƒ‰ƒŠƒ“ƒsƒbƒN“Á‘[–@‚ÉŠî‚Ã‚«“ú•t‚ªˆÙ‚È‚é
+    ' æ±äº¬äº”è¼ªãƒ»ãƒ‘ãƒ©ãƒªãƒ³ãƒ”ãƒƒã‚¯ç‰¹æªæ³•ã«åŸºã¥ã2020å¹´ã¯æ—¥ä»˜ãŒç•°ãªã‚‹
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/22/2020") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/23/2020") = "ŠC‚Ì“ú")
-    ' —j“úŒÅ’èŒã
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/23/2020") = "æµ·ã®æ—¥")
+    ' æ”¹æ­£ æ±äº¬äº”è¼ªãƒ»ãƒ‘ãƒ©ãƒªãƒ³ãƒ”ãƒƒã‚¯ç‰¹æªæ³•ã«åŸºã¥ã2021å¹´ã¯æ—¥ä»˜ãŒç•°ãªã‚‹
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/2021") = "")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/22/2021") = "æµ·ã®æ—¥")
+    ' æ›œæ—¥å›ºå®šå¾Œ
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2003") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/2003") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/2003") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/22/2003") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2004") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2004") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2004") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2004") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/17/2005") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2005") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2005") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2005") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/16/2006") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/17/2006") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/17/2006") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2006") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/14/2019") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/15/2019") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/15/2019") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/16/2019") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2021") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2021") = "ŠC‚Ì“ú")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2021") = "")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/17/2022") = "")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2022") = "æµ·ã®æ—¥")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2022") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2098") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/2098") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/2098") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/22/2098") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2099") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2099") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2099") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/21/2099") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/18/2100") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2100") = "ŠC‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/19/2100") = "æµ·ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/20/2100") = "")
 
-    Debug.Print "[R‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[å±±ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/11/2015") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 2016 To MAX_YEAR
         If y = 2020 Then
-            ' 2020”N‚Ì‚İ“Œ‹ŒÜ—ÖEƒpƒ‰ƒŠƒ“ƒsƒbƒN“Á‘[–@‚ÉŠî‚Ã‚«“ú•t‚ªˆÙ‚È‚é
+            ' æ±äº¬äº”è¼ªãƒ»ãƒ‘ãƒ©ãƒªãƒ³ãƒ”ãƒƒã‚¯ç‰¹æªæ³•ã«åŸºã¥ã2020å¹´ã¯æ—¥ä»˜ãŒç•°ãªã‚‹
             Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/9/" & y) = "")
-            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/10/" & y) = "R‚Ì“ú")
+            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/10/" & y) = "å±±ã®æ—¥")
             Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/11/" & y) = "")
+        ElseIf y = 2021 Then
+            ' æ”¹æ­£ æ±äº¬äº”è¼ªãƒ»ãƒ‘ãƒ©ãƒªãƒ³ãƒ”ãƒƒã‚¯ç‰¹æªæ³•ã«åŸºã¥ã2021å¹´ã¯æ—¥ä»˜ãŒç•°ãªã‚‹
+            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/7/" & y) = "")
+            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/8/" & y) = "å±±ã®æ—¥")
+            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/9/" & y) = "")
         Else
             Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/10/" & y) = "")
-            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/11/" & y) = "R‚Ì“ú")
+            Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/11/" & y) = "å±±ã®æ—¥")
             Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("8/12/" & y) = "")
         End If
     Next
 
-    Debug.Print "[Œh˜V‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[æ•¬è€ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/1965") = "")
-    ' “K—pŠJnŒã`—j“úŒÅ’è‘O
+    ' é©ç”¨é–‹å§‹å¾Œï½æ›œæ—¥å›ºå®šå‰
     For y = 1966 To 2002
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/14/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/" & y) = "Œh˜V‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/" & y) = "æ•¬è€ã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/16/" & y) = "")
     Next
-    ' —j“úŒÅ’èŒã
+    ' æ›œæ—¥å›ºå®šå¾Œ
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/14/2003") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/2003") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/2003") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/16/2003") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/19/2004") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/20/2004") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/20/2004") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/21/2004") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/18/2005") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/19/2005") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/19/2005") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/20/2005") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/17/2006") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/18/2006") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/18/2006") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/19/2006") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/14/2098") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/2098") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/15/2098") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/16/2098") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/20/2099") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/21/2099") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/21/2099") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/22/2099") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/19/2100") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/20/2100") = "Œh˜V‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/20/2100") = "æ•¬è€ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/21/2100") = "")
 
-    Debug.Print "[H•ª‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[ç§‹åˆ†ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/22/1947") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/23/1947") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/24/1947") = "")
-    ' “K—pŠJnŒã
-    name = "H•ª‚Ì“ú"
+    ' é©ç”¨é–‹å§‹å¾Œ
+    name = "ç§‹åˆ†ã®æ—¥"
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/23/1948") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/23/1949") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/23/1950") = name)
@@ -476,91 +484,94 @@ Private Sub TestGetNationalHolidayName()
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/22/2148") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/23/2149") = name)
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("9/23/2150") = name)
-    ' 2151”NˆÈ~‚ÍŒvZ‚Å‚«‚È‚¢
+    ' 2151å¹´ä»¥é™ã¯è¨ˆç®—ã§ããªã„
     On Error Resume Next
     JapaneseHolidayUtils.GetNationalHolidayName ("9/23/2151")
-    Call PrintResultIfNg(Err.number = 5)
+    Call PrintResultIfNg(Err.Number = 5)
     On Error GoTo 0
 
-    Debug.Print "[‘Ìˆç‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[ä½“è‚²ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/1965") = "")
-    ' “K—pŠJnŒã`—j“úŒÅ’è‘O
+    ' é©ç”¨é–‹å§‹å¾Œï½æ›œæ—¥å›ºå®šå‰
     For y = 1966 To 1999
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/" & y) = "‘Ìˆç‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/" & y) = "ä½“è‚²ã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/" & y) = "")
     Next
-    ' —j“úŒÅ’èŒã
+    ' æ›œæ—¥å›ºå®šå¾Œ
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2000") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2000") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2000") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2000") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/7/2001") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2001") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2001") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2001") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2002") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/14/2002") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/14/2002") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/15/2002") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/12/2003") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2003") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2003") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/14/2003") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2017") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2017") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2017") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2017") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/7/2018") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2018") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2018") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2018") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2019") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/14/2019") = "‘Ìˆç‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/14/2019") = "ä½“è‚²ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/15/2019") = "")
 
-    Debug.Print "[ƒXƒ|[ƒc‚Ì“ú]"
-    ' 2020”N‚Ì‚İ“Œ‹ŒÜ—ÖEƒpƒ‰ƒŠƒ“ƒsƒbƒN“Á‘[–@‚ÉŠî‚Ã‚«“ú•t‚ªˆÙ‚È‚é
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/24/2020") = "ƒXƒ|[ƒc‚Ì“ú")
+    Debug.Print "[ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥]"
+    ' æ±äº¬äº”è¼ªãƒ»ãƒ‘ãƒ©ãƒªãƒ³ãƒ”ãƒƒã‚¯ç‰¹æªæ³•ã«åŸºã¥ã2020å¹´ã¯æ—¥ä»˜ãŒç•°ãªã‚‹
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/24/2020") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/25/2020") = "")
-    ' “K—pŠJnŒã
+    ' æ”¹æ­£ æ±äº¬äº”è¼ªãƒ»ãƒ‘ãƒ©ãƒªãƒ³ãƒ”ãƒƒã‚¯ç‰¹æªæ³•ã«åŸºã¥ã2021å¹´ã¯æ—¥ä»˜ãŒç•°ãªã‚‹
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/23/2021") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("7/24/2021") = "")
+    ' é©ç”¨é–‹å§‹å¾Œ
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2021") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/2021") = "ƒXƒ|[ƒc‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/2021") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/12/2021") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2022") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2022") = "ƒXƒ|[ƒc‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2022") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/2022") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/8/2023") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2023") = "ƒXƒ|[ƒc‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/9/2023") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2023") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/12/2098") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2098") = "ƒXƒ|[ƒc‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2098") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/14/2098") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/2099") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/12/2099") = "ƒXƒ|[ƒc‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/12/2099") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/13/2099") = "")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/10/2100") = "")
-    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/2100") = "ƒXƒ|[ƒc‚Ì“ú")
+    Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/11/2100") = "ã‚¹ãƒãƒ¼ãƒ„ã®æ—¥")
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("10/12/2100") = "")
 
-    Debug.Print "[•¶‰»‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[æ–‡åŒ–ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/3/1947") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 1948 To MAX_YEAR
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/2/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/3/" & y) = "•¶‰»‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/3/" & y) = "æ–‡åŒ–ã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/4/" & y) = "")
     Next
 
-    Debug.Print "[‹Î˜JŠ´Ó‚Ì“ú]"
-    ' “K—pŠJn‘O
+    Debug.Print "[å‹¤åŠ´æ„Ÿè¬ã®æ—¥]"
+    ' é©ç”¨é–‹å§‹å‰
     Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/23/1947") = "")
-    ' “K—pŠJnŒã
+    ' é©ç”¨é–‹å§‹å¾Œ
     For y = 1948 To MAX_YEAR
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/22/" & y) = "")
-        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/23/" & y) = "‹Î˜JŠ´Ó‚Ì“ú")
+        Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/23/" & y) = "å‹¤åŠ´æ„Ÿè¬ã®æ—¥")
         Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName("11/24/" & y) = "")
     Next
 
 End Sub
 
-' TestGetNationalHolidayName‚ÌƒeƒXƒg‚ğ‚·‚×‚ÄƒpƒX‚µ‚½ê‡‚Ì‚İÀs‰Â
+' TestGetNationalHolidayNameã®ãƒ†ã‚¹ãƒˆã‚’ã™ã¹ã¦ãƒ‘ã‚¹ã—ãŸå ´åˆã®ã¿å®Ÿè¡Œå¯
 Private Sub TestOthers()
     Dim d       As Date
     Dim y       As Integer
@@ -574,28 +585,28 @@ Private Sub TestOthers()
         For dy = 0 To 365
             name = JapaneseHolidayUtils.GetHolidayName(d)
 
-            ' •½“ú or ’Êí‚Ì“y“ú
+            ' å¹³æ—¥ or é€šå¸¸ã®åœŸæ—¥
             If name = "" Then
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsHoliday(d) = False)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsNationalHoliday(d) = False)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsSubstituteHoliday(d) = False)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsCitizensHoliday(d) = False)
 
-            ' U‘Ö‹x“ú
-            ElseIf name = "U‘Ö‹x“ú" Then
+            ' æŒ¯æ›¿ä¼‘æ—¥
+            ElseIf name = "æŒ¯æ›¿ä¼‘æ—¥" Then
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsHoliday(d) = True)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsNationalHoliday(d) = False)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsSubstituteHoliday(d) = True)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsCitizensHoliday(d) = False)
             
-            ' ‘–¯‚Ì‹x“ú
-            ElseIf name = "‘–¯‚Ì‹x“ú" Then
+            ' å›½æ°‘ã®ä¼‘æ—¥
+            ElseIf name = "å›½æ°‘ã®ä¼‘æ—¥" Then
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsHoliday(d) = True)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsNationalHoliday(d) = False)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsSubstituteHoliday(d) = False)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsCitizensHoliday(d) = True)
             
-            ' ‘–¯‚Ìj“ú
+            ' å›½æ°‘ã®ç¥æ—¥
             Else
                 Call PrintResultIfNg(JapaneseHolidayUtils.GetNationalHolidayName(d) = name)
                 Call PrintResultIfNg(JapaneseHolidayUtils.IsHoliday(d) = True)
