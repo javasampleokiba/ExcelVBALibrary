@@ -34,3 +34,9 @@ CBoolArray、CByteArray、CCurArray、CDateArray、CDblArray、CIntArray、CLngA
 [Listクラスモジュール]
 
 モジュール追加。
+
+## 2021/07/22
+
+[JapaneseHolidayUtilsモジュール]
+
+- 改正 東京五輪・パラリンピック特措法に対応（2021年の一部祝日を移動）
