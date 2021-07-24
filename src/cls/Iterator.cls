@@ -30,7 +30,6 @@ End Enum
 Private itType_         As Integer
 Private curIdx_         As Long
 Private count_          As Long
-Private arr_            As Variant
 Private list_           As List
 Private mode_           As String
 Private objectFlg_      As Boolean
@@ -47,16 +46,15 @@ Private returnItem_     As Variant
 Public Sub InitArrayIterator(ByRef arr As Variant, Optional ByVal mode As String)
 
     itType_ = IteratorType.TYPE_ARRAY
-    arr_ = arr
+    Set list_ = New List
+    Call list_.Concat(arr)
     mode_ = LCase(mode)
     count_ = 0
 
-    If ArrayUtils.IsEmptyArray(arr_) Then
-        curIdx_ = -1
-    ElseIf mode_ = "reverse" Then
-        curIdx_ = UBound(arr_) + 1
+    If mode_ = "reverse" Then
+        curIdx_ = list_.Length()
     Else
-        curIdx_ = LBound(arr_) - 1
+        curIdx_ = -1
     End If
 
 End Sub
@@ -96,7 +94,7 @@ Public Function HasNext() As Boolean
 
     Select Case itType_
     Case IteratorType.TYPE_ARRAY
-        HasNext = HasNextArray(nextIdx)
+        HasNext = HasNextList(nextIdx)
     Case IteratorType.TYPE_LIST
         HasNext = HasNextList(nextIdx)
     End Select
@@ -114,7 +112,7 @@ Public Function GetNext() As Variant
 
     Select Case itType_
     Case IteratorType.TYPE_ARRAY
-        Call NextArray
+        Call NextList
     Case IteratorType.TYPE_LIST
         Call NextList
     End Select
@@ -243,37 +241,7 @@ Private Sub SetNext(ByRef item As Variant)
 End Sub
 
 '------------------------------------------------------------------------------
-' Methods for Array
-'------------------------------------------------------------------------------
-Private Function HasNextArray(ByVal nextIdx As Long) As Boolean
-    Dim idx     As Long
-
-    If ArrayUtils.IsEmptyArray(arr_) Then
-        HasNextArray = False
-        Exit Function
-    ElseIf nextIdx < LBound(arr_) Or UBound(arr_) < nextIdx Then
-        HasNextArray = False
-        Exit Function
-    End If
-
-    HasNextArray = True
-
-End Function
-
-Private Sub NextArray()
-
-    Call SetNext(arr_(curIdx_))
-
-End Sub
-
-Private Sub RemoveArray()
-
-    Call Err.Raise(17)
-
-End Sub
-
-'------------------------------------------------------------------------------
-' Methods for List
+' Methods for List and Array
 '------------------------------------------------------------------------------
 Private Function HasNextList(ByVal nextIdx As Long) As Boolean
     Dim idx     As Long
