@@ -40,3 +40,9 @@ CBoolArray、CByteArray、CCurArray、CDateArray、CDblArray、CIntArray、CLngA
 [JapaneseHolidayUtilsモジュール]
 
 - 改正 東京五輪・パラリンピック特措法に対応（2021年の一部祝日を移動）
+
+## 2021/07/24
+
+[Iteratorクラスモジュール]
+
+モジュール追加。
