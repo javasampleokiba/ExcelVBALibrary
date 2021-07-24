@@ -67,6 +67,7 @@ Sub TestAll()
 
     ' [クラスモジュール]
     Call TestBusinessDayCalculator.TestAll
+    Call TestIterator.TestAll
     Call TestList.TestAll(arr)
     
 End Sub
