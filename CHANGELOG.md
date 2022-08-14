@@ -46,3 +46,7 @@ CBoolArray、CByteArray、CCurArray、CDateArray、CDblArray、CIntArray、CLngA
 [Iteratorクラスモジュール]
 
 モジュール追加。
+
+## 2022/08/14
+
+StringUtilsモジュール追加。
