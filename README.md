@@ -13,6 +13,7 @@ ExcelVBALibraryは、ExcelVBAで開発する際に役立つ標準モジュール
 | CellAddressUtils     | セルアドレスに関するユーティリティモジュール                 | -              |
 | JapaneseHolidayUtils | 日本の「国民の祝日」、「振替休日」、「国民の休日」に関するユーティリティクラス | -              |
 | LangUtils            | ExcelVBAの共通的処理に使用されるユーティリティモジュール     | ArrayUtils     |
+| StringUtils          | 文字列操作に関するユーティリティモジュール                   | ArrayUtils     |
 
 ◆**クラスモジュール一覧**
 
