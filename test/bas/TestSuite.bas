@@ -64,6 +64,7 @@ Sub TestAll()
     Call TestCellAddressUtils.TestAll
     Call TestJapaneseHolidayUtils.TestAll
     Call TestLangUtils.TestAll(arr)
+    Call TestStringUtils.TestAll(arr)
 
     ' [クラスモジュール]
     Call TestBusinessDayCalculator.TestAll
