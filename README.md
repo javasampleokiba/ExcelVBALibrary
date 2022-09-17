@@ -42,7 +42,8 @@ ExcelVBALibraryは、ExcelVBAで開発する際に役立つ標準モジュール
 [[ExcelVBA\][サンプルコード] 可変長引数（ParamArray）をスマートに受け取る](http://javasampleokiba.blog.fc2.com/blog-entry-50.html)<br>
 [[ExcelVBA\][サンプルコード] 配列に一括で値を格納する](http://javasampleokiba.blog.fc2.com/blog-entry-51.html)<br>
 [[ExcelVBA\][サンプルコード] 独自のコレクション（リスト）クラスを作ってみた](http://javasampleokiba.blog.fc2.com/blog-entry-52.html)<br>
-[[ExcelVBA\][サンプルコード] イテレータを作ってみた](http://javasampleokiba.blog.fc2.com/blog-entry-53.html)
+[[ExcelVBA\][サンプルコード] イテレータを作ってみた](http://javasampleokiba.blog.fc2.com/blog-entry-53.html)<br>
+[[ExcelVBA\][サンプルコード] 特定の文字列が含まれるか判定する](http://javasampleokiba.blog.fc2.com/blog-entry-56.html)
 
 ## License
 [LICENSE](https://github.com/javasampleokiba/ExcelVBALibrary/blob/main/LICENSE)を参照してください。
